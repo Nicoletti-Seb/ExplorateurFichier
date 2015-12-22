@@ -1,20 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>fr.miage.m1.pa</groupId>
-  <artifactId>ExplorateurDeFichier</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>fr.miage.m1.pa.explorateur</groupId>
+	<artifactId>explorateur</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-  <name>ExplorateurDeFichier</name>
-  <url>http://maven.apache.org</url>
+	<name>explorateur</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-	 <build>
+	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -22,8 +22,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.1</version>
 					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
+						<source>1.7</source>
+						<target>1.7</target>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -38,4 +38,10 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	
+	<modules>
+		<module>explorateur_plugins</module>
+		<module>explorateur_app</module>
+	</modules>
+	
 </project>
