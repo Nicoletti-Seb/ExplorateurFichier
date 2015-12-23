@@ -1,5 +1,5 @@
 package fr.miage.m1.pa.explorateur.interfaces;
 
-public interface Plugin {
-	
+public interface Vue {
+
 }
