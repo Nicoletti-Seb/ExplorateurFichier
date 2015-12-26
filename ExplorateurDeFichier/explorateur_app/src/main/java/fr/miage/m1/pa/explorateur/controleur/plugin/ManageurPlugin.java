@@ -1,9 +1,12 @@
 package fr.miage.m1.pa.explorateur.controleur.plugin;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import fr.miage.m1.pa.explorateur.controleur.classloader.RepositoryG;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 
@@ -73,25 +76,52 @@ public class ManageurPlugin {
 	}
 
 	/**
-	 * @return L'état de chaque plugin. (Activé ou non )
+	 * @return L'état de chaque plugin. ( Activé ou non )
 	 */
 	public Map<String, Boolean> getEtatPlugins() {
 		Map<String, Boolean> resultat = new LinkedHashMap<>();
 		Iterator<Plugin> i = listePlugin.keySet().iterator();
-		
-		while(i.hasNext()){
+
+		while (i.hasNext()) {
 			Plugin plugin = i.next();
 			resultat.put(plugin.getNom(), listePlugin.get(plugin));
 		}
-		
+
 		return resultat;
+	}
+
+	/**
+	 * Charge les plugins à partir de l'emplacement donné en paramétre.
+	 * @return true, si la fonction c'est effectué sans erreur.
+	 */
+	public boolean chargerPlugin(String path) {
+		File dossier = new File(path);
+		if (!dossier.exists() || !dossier.isDirectory()) {
+			return false;
+		}
+
+		RepositoryG<Plugin> repositoryG = new RepositoryG<>(new File(path), Plugin.class);
+		List<Class<? extends Plugin>> listClass = repositoryG.load();
+
+		for (Class<? extends Plugin> cl : listClass) {
+			try {
+				Plugin plugin = cl.newInstance();
+				listePlugin.put(plugin, false);
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return true;
 	}
 
 	private Plugin getPlugin(String nomPlugin) {
 		if (nomPlugin == null || nomPlugin.isEmpty()) {
 			return null;
 		}
-		
+
 		Iterator<Plugin> i = listePlugin.keySet().iterator();
 		while (i.hasNext()) {
 			Plugin plugin = i.next();
