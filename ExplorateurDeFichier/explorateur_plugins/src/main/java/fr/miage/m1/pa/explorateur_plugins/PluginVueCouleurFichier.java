@@ -14,5 +14,10 @@ public class PluginVueCouleurFichier implements Plugin {
 	public void unplug(Controleur controleur) {
 		// TODO Auto-generated method stub
 	}
+
+	@Override
+	public String getNom() {
+		return "VueCouleurFichier";
+	}
 	
 }
