@@ -1,27 +1,32 @@
-package fr.miage.m1.pa.explorateur_plugins;
+package fr.miage.m1.pa.test;
 
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 
-public class PluginVueCouleurFichier implements Plugin {
+/**
+ *Ce plugin permet de tester la class ManageurPlugin.
+ */
+public class PluginTestChargeurPlugin implements Plugin{
 
 	@Override
 	public void plug(Controleur controleur) {
-		// TODO Auto-generated method stub
+		controleur.getModele();	
+		controleur.getVue();
 	}
 
 	@Override
 	public void unplug(Controleur controleur) {
-		// TODO Auto-generated method stub
+		controleur.getModele();	
+		controleur.getVue();
 	}
 
 	@Override
 	public String getNom() {
-		return "VueCouleurFichier";
+		return "Plugin de Test";
 	}
-	
 	
 	public static void main(String[] args) {
 		System.out.println("Build class");
 	}
+
 }
