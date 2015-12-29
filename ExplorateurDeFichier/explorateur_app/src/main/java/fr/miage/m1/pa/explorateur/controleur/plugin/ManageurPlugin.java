@@ -3,6 +3,7 @@ package fr.miage.m1.pa.explorateur.controleur.plugin;
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -116,6 +117,21 @@ public class ManageurPlugin {
 
 		return true;
 	}
+	
+	/**
+	 * @return la liste de tous les plugins charger
+	 */ 
+	public List<String> getPlugins(){
+		List<String> resultat = new LinkedList<>();
+		
+		Iterator<Plugin> i = listePlugin.keySet().iterator();
+		while (i.hasNext()) {
+			Plugin plugin = i.next();
+			resultat.add(plugin.getNom());
+		}
+		
+		return resultat;
+	} 
 
 	private Plugin getPlugin(String nomPlugin) {
 		if (nomPlugin == null || nomPlugin.isEmpty()) {
