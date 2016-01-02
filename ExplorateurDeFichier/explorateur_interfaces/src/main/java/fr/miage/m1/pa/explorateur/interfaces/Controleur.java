@@ -4,5 +4,4 @@ public interface Controleur {
 	
 	public Vue getVue();
 	public Modele getModele();
-	
 }

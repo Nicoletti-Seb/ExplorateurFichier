@@ -5,45 +5,43 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPlugin;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
 import fr.miage.m1.pa.explorateur.interfaces.Vue;
 
-
-
-public class PluginAnalyseDirSize  {
-	
-	private static final String PATH = "src/test/java/fr/miage/m1/pa/tests/plugin";
+public class DirSizeTest {
+	private static final String PATH = "src/test/ressources/classes";
 	private ManageurPlugin manageurPlugin;
-	private Controleurback controleur;
+	private ControleurMock controleurMok;
 
 	@Before
-	public  void init() {
-		controleur = new Controleurback();
-		manageurPlugin = new ManageurPlugin(controleur);
+	public void init() {
+		controleurMok = new ControleurMock();
+		manageurPlugin = new ManageurPlugin(controleurMok);
 		Assert.assertTrue(manageurPlugin.chargerPlugin(PATH));
-		
+
 		List<String> listPlugin = manageurPlugin.getPlugins();
 		Assert.assertFalse(listPlugin.isEmpty());
 	}
-	
-	
 
+	@Test
 	public void plugSize() {
- 
-	File Rep = new File(PATH);
+
+		File Rep = new File(PATH);
 
 		long taille = 0;
 
 		for (File f : Rep.listFiles()) {
 
-		if (f.isDirectory())
-			taille += calculRecursive(f);
+			if (f.isDirectory())
+				taille += calculRecursive(f);
 			else if (f.isFile())
-			taille += f.length();
-				
+				taille += f.length();
+
 		}
 		System.out.println("la taille du compos " + taille);
 
@@ -63,18 +61,18 @@ public class PluginAnalyseDirSize  {
 		}
 		return taille;
 	}
+	@Test
+	public void unplug() {
+		// TODO Auto-generated method stub
 
-	/*public File getPathCurrent() {
-		File f = new File(".");
-		return f;
-	}*/
-	private class Controleurback implements Controleur{
+	}
+	private class ControleurMock implements Controleur {
 		private int nbGetVue;
 		private int nbGetModele;
 
 		@Override
 		public Vue getVue() {
-			nbGetVue ++;
+			nbGetVue++;
 			return null;
 		}
 
@@ -83,8 +81,15 @@ public class PluginAnalyseDirSize  {
 			nbGetModele++;
 			return null;
 		}
-		
-	
+
+		public int getNbGetVue() {
+			return nbGetVue;
+		}
+
+		public int getNbGetModele() {
+			return nbGetModele;
+		}
 	}
-	
+
+
 }
