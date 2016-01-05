@@ -12,6 +12,7 @@ public class PluginTestChargeurPlugin implements Plugin{
 	public void plug(Controleur controleur) {
 		controleur.getModele();	
 		controleur.getVue();
+		
 	}
 
 	@Override

@@ -1,6 +1,11 @@
 package fr.miage.m1.pa.explorateur.controleur.plugin;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -16,12 +21,22 @@ import fr.miage.m1.pa.explorateur.interfaces.Plugin;
  */
 public class ManageurPlugin {
 
+	private static final String PATH = "../explorateur_plugins/target/classes";
+	
 	private Map<Plugin, Boolean> listePlugin;
-	private Controleur controleur;
 
-	public ManageurPlugin(Controleur controleur) {
+	public ManageurPlugin() {
 		this.listePlugin = new LinkedHashMap<>();
-		this.controleur = controleur;
+		chargerPlugins(PATH);
+	}
+	
+	public boolean onPluginClicked(String nomPlugin, Controleur controleur) {
+		
+		if(pluginEstActive(nomPlugin)) {
+			return desactiverPlugin(nomPlugin, controleur);
+		} else {
+			return activerPlugin(nomPlugin, controleur);
+		}
 	}
 
 	/**
@@ -41,7 +56,7 @@ public class ManageurPlugin {
 	 * 
 	 * @return return true, si cela a fonctionné ou s'il est déja activé.
 	 */
-	public boolean activerPlugin(String nomPlugin) {
+	public boolean activerPlugin(String nomPlugin, Controleur controleur) {
 		Plugin plugin = getPlugin(nomPlugin);
 		if (plugin == null) {
 			return false;
@@ -61,7 +76,7 @@ public class ManageurPlugin {
 	 * 
 	 * @return return true, si cela a fonctionné ou s'il est déja désactivé.
 	 */
-	public boolean desactiverPlugin(String nomPlugin) {
+	public boolean desactiverPlugin(String nomPlugin, Controleur controleur) {
 		Plugin plugin = getPlugin(nomPlugin);
 		if (plugin == null) {
 			return false;
@@ -93,9 +108,10 @@ public class ManageurPlugin {
 
 	/**
 	 * Charge les plugins à partir de l'emplacement donné en paramétre.
+	 * 
 	 * @return true, si la fonction c'est effectué sans erreur.
 	 */
-	public boolean chargerPlugin(String path) {
+	public boolean chargerPlugins(String path) {
 		File dossier = new File(path);
 		if (!dossier.exists() || !dossier.isDirectory()) {
 			return false;
@@ -117,21 +133,92 @@ public class ManageurPlugin {
 
 		return true;
 	}
-	
+
 	/**
 	 * @return la liste de tous les plugins charger
-	 */ 
-	public List<String> getPlugins(){
+	 */
+	public List<String> getPlugins() {
 		List<String> resultat = new LinkedList<>();
-		
+
 		Iterator<Plugin> i = listePlugin.keySet().iterator();
 		while (i.hasNext()) {
 			Plugin plugin = i.next();
 			resultat.add(plugin.getNom());
 		}
-		
+
 		return resultat;
-	} 
+	}
+
+	/**
+	 * Sauvegarde l'etat de tous les plugins charger.
+	 * 
+	 * @param path
+	 *            : Le chemin vers le fichier de destination.
+	 * @return
+	 */
+	public boolean saveEtatPlugin(String path) {
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
+			try {
+				oos.writeObject(getEtatPlugins());
+				oos.flush();
+			} finally {
+				oos.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Charge l'état des plugins à partire d'un fichier. (Active ou désactive
+	 * les plugins)
+	 * 
+	 * @param path
+	 *            Le chemin vers le fichier source.
+	 * @return true, si le chargement c'est éffectué sans erreur.
+	 */
+	@SuppressWarnings("unchecked")
+	public boolean loadEtatPlugin(String path, Controleur controleur) {
+		File file = new File(path);
+		if (!file.exists() || !file.isFile()) {
+			return false;
+		}
+
+		Map<String, Boolean> etatPlugin = null;
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
+			try {
+				etatPlugin = (Map<String, Boolean>) ois.readObject();
+			} finally {
+				ois.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		updatePlugin(etatPlugin, controleur);
+		return true;
+	}
+
+	private void updatePlugin(Map<String, Boolean> etatPlugin, Controleur controleur) {
+		Iterator<String> i = etatPlugin.keySet().iterator();
+		while (i.hasNext()) {
+			String nomPlugin = i.next();
+			if (etatPlugin.get(nomPlugin)) {
+				activerPlugin(nomPlugin, controleur);
+			} else {
+				desactiverPlugin(nomPlugin, controleur);
+			}
+		}
+	}
 
 	private Plugin getPlugin(String nomPlugin) {
 		if (nomPlugin == null || nomPlugin.isEmpty()) {

@@ -21,8 +21,8 @@ public class ChargeurPluginTest {
 	@Before
 	public  void init() {
 		controleurMok = new ControleurMock();
-		manageurPlugin = new ManageurPlugin(controleurMok);
-		Assert.assertTrue(manageurPlugin.chargerPlugin(PATH));
+		manageurPlugin = new ManageurPlugin();
+		Assert.assertTrue(manageurPlugin.chargerPlugins(PATH));
 		
 		List<String> listPlugin = manageurPlugin.getPlugins();
 		Assert.assertFalse(listPlugin.isEmpty());
@@ -32,7 +32,7 @@ public class ChargeurPluginTest {
 	public void chargeurPluginPlug(){
 		List<String> listPlugin = manageurPlugin.getPlugins();
 		for( String plugin : listPlugin ){
-			manageurPlugin.activerPlugin(plugin);
+			manageurPlugin.activerPlugin(plugin, controleurMok);
 			Assert.assertTrue(manageurPlugin.pluginEstActive(plugin));
 		}
 		
@@ -45,11 +45,11 @@ public class ChargeurPluginTest {
 	public void chargeurPluginUnPlug(){
 		List<String> listPlugin = manageurPlugin.getPlugins();
 		for( String plugin : listPlugin ){
-			manageurPlugin.activerPlugin(plugin);
+			manageurPlugin.activerPlugin(plugin,controleurMok);
 		}
 		
 		for( String plugin : listPlugin ){
-			manageurPlugin.desactiverPlugin(plugin);
+			manageurPlugin.desactiverPlugin(plugin, controleurMok);
 			Assert.assertFalse(manageurPlugin.pluginEstActive(plugin));
 		}
 		

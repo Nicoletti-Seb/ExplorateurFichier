@@ -9,13 +9,14 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.miage.m1.pa.ExplorateurDeFichier.beans.Title;
+import fr.miage.m1.pa.explorateur.enums.Title;
+
 
 public class FileExplorerModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 6649734622340343522L;
 	
-	private List<Title> titles;
+	private List<fr.miage.m1.pa.explorateur.enums.Title> titles;
 	private String[][] datas;
 	private File currentPath;
 	private List<File> fileList;

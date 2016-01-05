@@ -1,9 +1,9 @@
-package fr.miage.m1.pa.ExplorateurDeFichier.beans;
+package fr.miage.m1.pa.explorateur.enums;
 
 public enum Title {
 	
 	NAME("Nom"),
-	MODIFIED("Modifi� le"),
+	MODIFIED("Modifié le"),
 	TYPE("Type"),
 	SIZE("Taille");
 
