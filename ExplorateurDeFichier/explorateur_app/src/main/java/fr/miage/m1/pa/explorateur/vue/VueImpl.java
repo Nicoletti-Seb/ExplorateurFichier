@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.util.List;
 
@@ -21,12 +23,11 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.table.TableModel;
 
-import fr.miage.m1.pa.ExplorateurDeFichier.TableRenderer;
 import fr.miage.m1.pa.explorateur.interfaces.ControleurVueListener;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
 import fr.miage.m1.pa.explorateur.interfaces.Vue;
 
-public class VueImpl extends JFrame implements Vue {
+public class VueImpl extends JFrame implements Vue, WindowListener {
 
 	private static final long serialVersionUID = 2636414275903248790L;
 
@@ -86,6 +87,7 @@ public class VueImpl extends JFrame implements Vue {
 		setContentPane(mainPanel);
 
 		pack();
+		addWindowListener(this);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -126,6 +128,47 @@ public class VueImpl extends JFrame implements Vue {
 	@Override
 	public void setControleurListener(ControleurVueListener listener) {
 		this.listener = listener;
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		listener.onClose();
 		
 	}
 	

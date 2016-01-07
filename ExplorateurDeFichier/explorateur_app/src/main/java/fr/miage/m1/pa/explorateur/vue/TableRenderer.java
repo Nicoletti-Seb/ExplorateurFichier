@@ -1,4 +1,4 @@
-package fr.miage.m1.pa.ExplorateurDeFichier;
+package fr.miage.m1.pa.explorateur.vue;
 
 import java.awt.Component;
 import java.io.File;

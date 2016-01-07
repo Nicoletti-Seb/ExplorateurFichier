@@ -15,27 +15,32 @@ import java.util.Map;
 import fr.miage.m1.pa.explorateur.controleur.classloader.RepositoryG;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
+import fr.miage.m1.pa.explorateur.interfaces.Saving;
 
 /**
  * Cette class permet de charger et gérer les plugins disponibles.
  */
-public class ManageurPlugin {
+public class ManageurPlugin implements Saving {
 
+	private static final String STATE_FILE = "ManageurPlugin";
 	private static final String PATH = "../explorateur_plugins/target/classes";
 	
 	private Map<Plugin, Boolean> listePlugin;
+	private Controleur controleur;
+	
 
-	public ManageurPlugin() {
+	public ManageurPlugin(Controleur controleur) {
 		this.listePlugin = new LinkedHashMap<>();
+		this.controleur = controleur;
 		chargerPlugins(PATH);
 	}
 	
-	public boolean onPluginClicked(String nomPlugin, Controleur controleur) {
+	public boolean onPluginClicked(String nomPlugin) {
 		
 		if(pluginEstActive(nomPlugin)) {
-			return desactiverPlugin(nomPlugin, controleur);
+			return desactiverPlugin(nomPlugin);
 		} else {
-			return activerPlugin(nomPlugin, controleur);
+			return activerPlugin(nomPlugin);
 		}
 	}
 
@@ -56,7 +61,7 @@ public class ManageurPlugin {
 	 * 
 	 * @return return true, si cela a fonctionné ou s'il est déja activé.
 	 */
-	public boolean activerPlugin(String nomPlugin, Controleur controleur) {
+	public boolean activerPlugin(String nomPlugin) {
 		Plugin plugin = getPlugin(nomPlugin);
 		if (plugin == null) {
 			return false;
@@ -76,7 +81,7 @@ public class ManageurPlugin {
 	 * 
 	 * @return return true, si cela a fonctionné ou s'il est déja désactivé.
 	 */
-	public boolean desactiverPlugin(String nomPlugin, Controleur controleur) {
+	public boolean desactiverPlugin(String nomPlugin) {
 		Plugin plugin = getPlugin(nomPlugin);
 		if (plugin == null) {
 			return false;
@@ -182,7 +187,7 @@ public class ManageurPlugin {
 	 * @return true, si le chargement c'est éffectué sans erreur.
 	 */
 	@SuppressWarnings("unchecked")
-	public boolean loadEtatPlugin(String path, Controleur controleur) {
+	public boolean loadEtatPlugin(String path) {
 		File file = new File(path);
 		if (!file.exists() || !file.isFile()) {
 			return false;
@@ -204,18 +209,18 @@ public class ManageurPlugin {
 			return false;
 		}
 
-		updatePlugin(etatPlugin, controleur);
+		updatePlugin(etatPlugin);
 		return true;
 	}
 
-	private void updatePlugin(Map<String, Boolean> etatPlugin, Controleur controleur) {
+	private void updatePlugin(Map<String, Boolean> etatPlugin) {
 		Iterator<String> i = etatPlugin.keySet().iterator();
 		while (i.hasNext()) {
 			String nomPlugin = i.next();
 			if (etatPlugin.get(nomPlugin)) {
-				activerPlugin(nomPlugin, controleur);
+				activerPlugin(nomPlugin);
 			} else {
-				desactiverPlugin(nomPlugin, controleur);
+				desactiverPlugin(nomPlugin);
 			}
 		}
 	}
@@ -235,5 +240,26 @@ public class ManageurPlugin {
 
 		return null;
 	}
+
+	@Override
+	public Object getObjectToSave() {
+		
+		return getEtatPlugins();
+	}
+
+	@Override
+	public String getFileNameToSave() {
+		
+		return STATE_FILE;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void retrieveSavedObject(Object obj) {
+		
+		Map<String, Boolean> etatPlugin = (Map<String, Boolean>) obj;
+		if(etatPlugin != null) updatePlugin(etatPlugin);
+	}
+	
 
 }
