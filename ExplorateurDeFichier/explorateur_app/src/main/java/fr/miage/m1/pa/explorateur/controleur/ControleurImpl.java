@@ -30,7 +30,7 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 	
 	public ControleurImpl() {
 		
-		currentFile = new File("C:/Users/kenzo/Documents/M1_MIAGE/Projet_PA/ExplorateurFichier");
+		currentFile = new File("./");
 		
 		managerPlugin = new ManageurPlugin(this);
 		saveManager = new SaveManager();
@@ -64,7 +64,6 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 	public void mouseClicked(MouseEvent e) {
 		
 		if(e.getSource().equals(vue.getMainTable())) {
-			
 			if(e.getClickCount() == 2) {
 				
 				File f = modele.getFileAt(vue.getMainTable().getSelectedRow());
