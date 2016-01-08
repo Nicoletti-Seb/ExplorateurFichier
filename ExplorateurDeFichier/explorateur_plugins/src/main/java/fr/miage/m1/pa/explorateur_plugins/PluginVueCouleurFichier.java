@@ -1,18 +1,24 @@
 package fr.miage.m1.pa.explorateur_plugins;
 
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
+import fr.miage.m1.pa.explorateur.interfaces.Modele;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 
 public class PluginVueCouleurFichier implements Plugin {
 
 	@Override
 	public void plug(Controleur controleur) {
-		// TODO Auto-generated method stub
+
+		Modele modele = controleur.getModele();
+		
+		setDonnes(modele);
+		
 	}
 
 	@Override
 	public void unplug(Controleur controleur) {
-		// TODO Auto-generated method stub
+		controleur.getModele().reset();
+		
 	}
 
 	@Override
@@ -20,6 +26,9 @@ public class PluginVueCouleurFichier implements Plugin {
 		return "VueCouleurFichier";
 	}
 	
+	private void setDonnes(Modele modele) {
+	
+	}
 	
 	public static void main(String[] args) {
 		System.out.println("Build class");
