@@ -26,7 +26,7 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 	public ControleurImpl() {
 		
 		//currentFile = new File("C:/Users/kenzo/Documents/M1_MIAGE/ProjetPA");
-		currentFile = new File("C:/Users/deptinfo/wksp/ExplorateurFichier/ExplorateurDeFichier");
+		currentFile = new File("C:/Users/deptinfo/Desktop/TestNour");
 		    
 		
 		managerPlugin = new ManageurPlugin();
