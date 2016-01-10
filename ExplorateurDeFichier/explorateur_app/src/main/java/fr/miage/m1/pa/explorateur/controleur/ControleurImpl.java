@@ -1,5 +1,7 @@
 package fr.miage.m1.pa.explorateur.controleur;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -14,8 +16,10 @@ import fr.miage.m1.pa.explorateur.interfaces.Vue;
 import fr.miage.m1.pa.explorateur.modele.ModeleImpl;
 import fr.miage.m1.pa.explorateur.vue.VueImpl;
 
-public class ControleurImpl implements Controleur, MouseListener, ControleurVueListener, ManageurPluginListener {
+public class ControleurImpl implements Controleur, ActionListener, MouseListener, ControleurVueListener, ManageurPluginListener {
 
+	public static final String ACTION_PRECEDENT = "ACTION_PRECEDENT";
+	
 	private File currentFile;
 	
 	private ManageurPlugin managerPlugin;
@@ -25,7 +29,7 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 	
 	public ControleurImpl() {
 		
-		currentFile = new File("./");
+		currentFile = new File(System.getProperty("user.dir"));
 		
 		managerPlugin = new ManageurPlugin();
 		
@@ -34,6 +38,7 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 		//vue.setPluginMenu(managerPlugin.getPlugins());
 		vue.setMouseListener(this);
 		vue.setControleurListener(this);
+		vue.setActionListener(this);
 	}
 	
 	@Override
@@ -51,7 +56,6 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 		
 		if(e.getSource().equals(vue.getMainTable())) {
 			if(e.getClickCount() == 2) {
-				
 				File f = modele.getFileAt(vue.getMainTable().getSelectedRow());
 				if(f.isDirectory()) {
 					modele.setCurrentPath(f);
@@ -59,7 +63,6 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 				
 			}
 		}
-		
 	}
 	
 
@@ -101,6 +104,13 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 		
 		managerPlugin.onPluginClicked(plugin, this);
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if( ACTION_PRECEDENT.equals(e.getActionCommand()) ){
+			modele.setCurrentPath(modele.getCurrentPath().getParentFile());
+		}
 	}
 	
 
