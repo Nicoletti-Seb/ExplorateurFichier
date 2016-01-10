@@ -133,16 +133,20 @@ private static final long serialVersionUID = 6649734622340343522L;
 	}
 
 	@Override
-	public void setCurrentPath(File currentPath) {
+	public boolean setCurrentPath(File currentPath) {
 		
 		if( currentPath == null || !currentPath.exists()){
-			return;
+			return false;
 		}
 		
 		if(!this.currentPath.equals(currentPath)) {
 			this.currentPath = currentPath;
 			populate();
+			
+			return true;
 		}
+		
+		return false;
 	}
 
 

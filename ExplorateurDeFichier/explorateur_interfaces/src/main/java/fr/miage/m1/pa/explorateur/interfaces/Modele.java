@@ -8,7 +8,7 @@ import fr.miage.m1.pa.explorateur.enums.Title;
 public interface Modele {
 
 	public File getFileAt(int row);
-	public void setCurrentPath(File currentPath);
+	public boolean setCurrentPath(File currentPath);
 	public File getCurrentPath();
 	
 	public List<Title> getTitles();
