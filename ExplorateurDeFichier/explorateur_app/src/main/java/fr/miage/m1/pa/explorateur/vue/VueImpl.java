@@ -26,9 +26,8 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 	private static final long serialVersionUID = 2636414275903248790L;
 
 	private ExplorateurPanel mainPanel;
-
 	private JMenu menuPlugin;
-
+	private BarNavigateur barNavigateur;
 	private ControleurVueListener listener;
 
 	public VueImpl(Modele modele) {
@@ -37,6 +36,10 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 		
 		initMenu();
 
+		barNavigateur = new BarNavigateur();
+		barNavigateur.setChemin(modele.getCurrentPath().getAbsolutePath());
+		this.add(barNavigateur, BorderLayout.NORTH);
+
 		pack();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -44,7 +47,7 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 
 	private void initMenu() {
 		JMenuBar menuBar = new JMenuBar();
-		mainPanel.add(menuBar, BorderLayout.PAGE_START);
+		setJMenuBar(menuBar);
 
 		menuPlugin = new JMenu("Plugins");
 		menuBar.add(menuPlugin);
@@ -91,7 +94,7 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 			menuItem.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (listener != null){
+					if (listener != null) {
 						listener.onMenuClicked(plugin);
 					}
 				}

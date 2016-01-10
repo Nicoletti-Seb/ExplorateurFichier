@@ -31,6 +31,7 @@ public class ExplorateurPanel extends JPanel{
 
 		scrollPane = new JScrollPane(mainTable);
 		this.add(scrollPane, BorderLayout.CENTER);
+		
 	}
 	
 	
