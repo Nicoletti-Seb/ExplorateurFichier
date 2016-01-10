@@ -3,6 +3,7 @@ package fr.miage.m1.pa.explorateur.vue;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -103,6 +105,16 @@ public class VueImpl extends JFrame implements Vue {
 	@Override
 	public void setActionListener(ActionListener listener) {
 		barNavigateur.setActionListener(listener);
+	}
+
+	@Override
+	public void setKeyListener(KeyListener listener) {
+		barNavigateur.setKeyListener(listener);
+	}
+
+	@Override
+	public JTextField getLabelNavigateur() {
+		return barNavigateur.getLabelNavigateur();
 	}
 
 }
