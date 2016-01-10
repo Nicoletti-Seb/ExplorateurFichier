@@ -1,10 +1,14 @@
 package fr.miage.m1.pa.explorateur.vue;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import fr.miage.m1.pa.explorateur.controleur.ControleurImpl;
 
 public class BarNavigateur extends JPanel{
 	
@@ -15,6 +19,8 @@ public class BarNavigateur extends JPanel{
 	
 	public BarNavigateur() {
 		boutonPrec = new JButton("<");
+		boutonPrec.setActionCommand(ControleurImpl.ACTION_PRECEDENT);
+		
 		textChemin = new JTextField();
 		
 		setLayout(new BorderLayout());
@@ -24,5 +30,14 @@ public class BarNavigateur extends JPanel{
 
 	public void setChemin(String chemin){
 		textChemin.setText(chemin);
+	}
+	
+	
+	public void setMouseListener(MouseListener listener) {
+		boutonPrec.addMouseListener(listener);
+	}
+
+	public void setActionListener(ActionListener listener){
+		boutonPrec.addActionListener(listener);
 	}
 }

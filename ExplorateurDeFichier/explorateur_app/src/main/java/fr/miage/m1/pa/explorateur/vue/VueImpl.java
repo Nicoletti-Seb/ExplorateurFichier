@@ -80,6 +80,7 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 	@Override
 	public void setMouseListener(MouseListener listener) {
 		mainPanel.setMouseListener(listener);
+		barNavigateur.setMouseListener(listener);
 	}
 
 	@Override
@@ -149,4 +150,9 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 		listener.onClose();
 		
 	}
+
+	public void setActionListener(ActionListener listener) {
+		barNavigateur.setActionListener(listener);
+	}
+
 }
