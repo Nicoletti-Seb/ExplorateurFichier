@@ -3,6 +3,7 @@ package fr.miage.m1.pa.explorateur_plugins;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
+
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -40,17 +41,19 @@ public class PluginVueCouleurFichier implements Plugin {
 	
 	private void ChangeColorRight(Modele modele){
 		List<File> fileList = modele.getFileList();
-		
+
+
 	
 	JTable jtable= new JTable(tableModel);
 	JPanel jpanel =new JPanel();
 	JScrollPane scrollTable = new JScrollPane(jtable);
 	jpanel.add(scrollTable);
 	
-	for (File file : fileList) {
-		getNewRenderedTable(jtable, file);
-	}
+	for(int i = 0; i < fileList.size();i++) {
+		File f = fileList.get(i);
+		getNewRenderedTable(jtable, f);
 	
+	}
 		
 	}
 	
