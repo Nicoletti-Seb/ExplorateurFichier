@@ -21,7 +21,7 @@ package fr.miage.m1.pa.tests.plugin;
 		@Before
 		public void init() {
 			controleurMok = new ControleurMock();
-			manageurPlugin = new ManageurPlugin();
+			manageurPlugin = new ManageurPlugin(controleurMok);
 			Assert.assertTrue(manageurPlugin.chargerPlugins(PATH));
 
 			List<String> listPlugin = manageurPlugin.getPlugins();
