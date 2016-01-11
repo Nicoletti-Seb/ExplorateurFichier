@@ -4,6 +4,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+
 import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPlugin;
 import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPluginListener;
 import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPluginVue;
@@ -104,6 +107,18 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 		
 		managerPlugin.onPluginClicked(plugin, this);
 		
+	}
+
+	@Override
+	public JTable DataTable() {
+		// Recuperer Jtable du frame
+		return null;
+	}
+
+	@Override
+	public TableModel DataModel() {
+		// Recuperer TableModel du Jtable
+		return null;
 	}
 	
 

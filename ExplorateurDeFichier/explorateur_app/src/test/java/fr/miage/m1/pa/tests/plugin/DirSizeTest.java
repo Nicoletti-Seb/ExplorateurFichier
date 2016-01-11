@@ -3,7 +3,10 @@ package fr.miage.m1.pa.tests.plugin;
 	import java.io.File;
 	import java.util.List;
 
-	import org.junit.Assert;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+
+import org.junit.Assert;
 	import org.junit.Before;
 	import org.junit.Ignore;
 	import org.junit.Test;
@@ -86,6 +89,18 @@ package fr.miage.m1.pa.tests.plugin;
 			}
 			public int getNbGetModele() {
 				return nbGetModele;
+			}
+
+			@Override
+			public TableModel DataModel() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public JTable DataTable() {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		}
 
