@@ -36,9 +36,14 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 	private Vue vue;
 
 	public ControleurImpl() {
-		currentFile = new File(System.getProperty("user.dir"));
 		managerPlugin = new ManageurPlugin(this);
 		saveManager = new SaveManager();
+		saveManager.retrieveState(managerPlugin);
+		saveManager.retrieveState(this);
+		
+		if(currentFile == null) {
+			currentFile = new File(System.getProperty("user.dir"));
+		}
 		modele = new ModeleImpl(currentFile);
 		vue = new VueImpl(modele);
 
@@ -48,12 +53,6 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 		vue.setActionListener(this);
 		vue.setKeyListener(this);
 
-		init();
-	}
-
-	private void init() {
-		saveManager.retrieveState(managerPlugin);
-		saveManager.retrieveState(this);
 	}
 
 	@Override
@@ -136,7 +135,7 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 
 	@Override
 	public void retrieveSavedObject(Object obj) {
-		setCurrentPath((File) obj);
+		currentFile = (File)obj;
 	}
 
 	@Override

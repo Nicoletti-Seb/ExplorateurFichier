@@ -13,7 +13,7 @@ public class SaveManager {
 
 	// Le répertoire où toutes les sauvegardes sont effectuées
 	//
-	private static final File saveDir = new File("./stateDir");
+	private static final File saveDir = new File("../../stateDir");
 	
 	public SaveManager() {
 		

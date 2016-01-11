@@ -79,7 +79,7 @@ private static final long serialVersionUID = 6649734622340343522L;
 			}
 		}
 		
-		fireTableDataChanged();
+		fireTableStructureChanged();
 	}
 
 	private String humanReadableByteCount(long bytes, boolean si) {
@@ -165,7 +165,7 @@ private static final long serialVersionUID = 6649734622340343522L;
 	@Override
 	public void setDatas(String[][] datas) {
 		this.datas = datas;
-		fireTableDataChanged();
+		fireTableStructureChanged();
 		
 	}
 	
