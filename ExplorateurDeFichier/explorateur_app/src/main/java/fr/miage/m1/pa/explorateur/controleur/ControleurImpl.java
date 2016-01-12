@@ -4,9 +4,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
-import javax.swing.JTable;
-import javax.swing.table.TableModel;
-
 import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPlugin;
 import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPluginListener;
 import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPluginVue;
@@ -29,7 +26,7 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 	public ControleurImpl() {
 		
 		//currentFile = new File("C:/Users/kenzo/Documents/M1_MIAGE/ProjetPA");
-		currentFile = new File("C:/Users/deptinfo/Desktop/TestNour");
+		currentFile = new File("C:/Users/deptinfo/Downloads");
 		    
 		
 		managerPlugin = new ManageurPlugin();
@@ -109,17 +106,7 @@ public class ControleurImpl implements Controleur, MouseListener, ControleurVueL
 		
 	}
 
-	@Override
-	public JTable DataTable() {
-		// Recuperer Jtable du frame
-		return null;
-	}
 
-	@Override
-	public TableModel DataModel() {
-		// Recuperer TableModel du Jtable
-		return null;
-	}
 	
 
 }

@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
 import fr.miage.m1.pa.explorateur.enums.Title;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
@@ -166,4 +168,15 @@ private static final long serialVersionUID = 6649734622340343522L;
 	public void reset() {
 		populate();
 	}
+	@Override
+	public JTable DataTable() {
+		return null;
+	}
+
+	@Override
+	public TableModel DataModel() {
+		// Recuperer TableModel du Jtable
+		return null;
+	}
 }
+

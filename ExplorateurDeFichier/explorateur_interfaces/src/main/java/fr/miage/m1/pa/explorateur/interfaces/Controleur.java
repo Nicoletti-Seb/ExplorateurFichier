@@ -7,6 +7,4 @@ public interface Controleur {
 	
 	public Vue getVue();
 	public Modele getModele();
-	public TableModel DataModel();
-	public JTable DataTable();
 }

@@ -96,16 +96,5 @@ public class ChargeurPluginTest {
 			return nbGetModele;
 		}
 
-		@Override
-		public TableModel DataModel() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public JTable DataTable() {
-			// TODO Auto-generated method stub
-			return null;
-		}
 	}
 }

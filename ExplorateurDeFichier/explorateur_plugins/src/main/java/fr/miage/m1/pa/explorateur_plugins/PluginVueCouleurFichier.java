@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
@@ -40,13 +41,12 @@ public class PluginVueCouleurFichier implements Plugin {
 	}
 
 	private void ChangeColorRight(Modele modele) {
-		List<File> fileList = modele.getFileList();
 
+		List<File> fileList = modele.getFileList();
 		JTable jtable = new JTable(tableModel);
 		JPanel jpanel = new JPanel();
 		JScrollPane scrollTable = new JScrollPane(jtable);
 		jpanel.add(scrollTable);
-
 		for (int i = 0; i < fileList.size(); i++) {
 			File f = fileList.get(i);
 			getNewRenderedTable(jtable, f);
@@ -64,9 +64,12 @@ public class PluginVueCouleurFichier implements Plugin {
 
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-				if (f.canWrite() == false && f.canExecute() == false) {
+				if (f.canWrite() == false ) {
 					c.setForeground(Color.red);
 				} else {
+					if ( f.canWrite() == false){
+						c.setForeground(Color.blue);
+					}
 					setBackground(table.getBackground());
 					setForeground(table.getForeground());
 				}
