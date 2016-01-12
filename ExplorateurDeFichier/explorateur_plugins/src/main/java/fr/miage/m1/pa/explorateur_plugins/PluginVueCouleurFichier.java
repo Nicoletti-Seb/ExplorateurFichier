@@ -67,7 +67,7 @@ public class PluginVueCouleurFichier implements Plugin {
 				if (f.canWrite() == false ) {
 					c.setForeground(Color.red);
 				} else {
-					if ( f.canWrite() == false){
+					if ( f.canRead() == false){
 						c.setForeground(Color.blue);
 					}
 					setBackground(table.getBackground());
