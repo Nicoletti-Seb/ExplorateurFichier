@@ -1,33 +1,26 @@
-package fr.miage.m1.pa.test;
+package fr.miage.m1.pa.explorateur_plugins;
 
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 
-/**
- *Ce plugin permet de tester la class ManageurPlugin.
- */
-public class PluginTestChargeurPlugin implements Plugin{
+public class PluginAnalyseColonnes implements Plugin {
 
 	@Override
 	public void plug(Controleur controleur) {
-		controleur.getModele();	
-		controleur.getVue();
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void unplug(Controleur controleur) {
-		controleur.getModele();	
-		controleur.getVue();
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public String getNom() {
-		return "Plugin de Test";
-	}
-	
-	public static void main(String[] args) {
-		System.out.println("Build class");
+		
+		return null;
 	}
 
 	@Override

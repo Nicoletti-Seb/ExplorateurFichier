@@ -167,4 +167,12 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 		return barNavigateur.getLabelNavigateur();
 	}
 
+	@Override
+	public void setModele(Modele modele) {
+		
+		mainPanel.setModel(modele);
+		modele.populate();
+		
+	}
+
 }

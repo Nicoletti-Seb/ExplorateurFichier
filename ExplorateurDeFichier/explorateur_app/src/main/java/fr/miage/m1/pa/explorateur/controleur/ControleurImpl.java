@@ -7,6 +7,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JTextField;
 
@@ -38,7 +40,6 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 	public ControleurImpl() {
 		managerPlugin = new ManageurPlugin(this);
 		saveManager = new SaveManager();
-		saveManager.retrieveState(managerPlugin);
 		saveManager.retrieveState(this);
 		
 		if(currentFile == null) {
@@ -47,6 +48,8 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 		modele = new ModeleImpl(currentFile);
 		vue = new VueImpl(modele);
 
+		saveManager.retrieveState(managerPlugin);
+		
 		// vue.setPluginMenu(managerPlugin.getPlugins());
 		vue.setMouseListener(this);
 		vue.setControleurListener(this);
@@ -79,6 +82,7 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 	private void setCurrentPath(File f) {
 		if (f.isDirectory()) {
 			if (modele.setCurrentPath(f)) {
+				modele.populate();
 				currentFile = f;
 				JTextField text = vue.getLabelNavigateur();
 				text.setText(modele.getCurrentPath().getAbsolutePath());
@@ -117,6 +121,7 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 		managerPlugin.onPluginClicked(plugin);
 	}
 
+
 	@Override
 	public void onClose() {
 		saveManager.saveState(managerPlugin);
@@ -125,7 +130,7 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 
 	@Override
 	public Object getObjectToSave() {
-		return currentFile;
+		return modele.getCurrentPath();
 	}
 
 	@Override
@@ -136,12 +141,14 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 	@Override
 	public void retrieveSavedObject(Object obj) {
 		currentFile = (File)obj;
+		System.out.println("ControleurImpl.retrieveSavedObject() " + currentFile.getName());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (ACTION_PRECEDENT.equals(e.getActionCommand())) {
 			if (modele.setCurrentPath(modele.getCurrentPath().getParentFile())) {
+				modele.populate();
 				JTextField text = vue.getLabelNavigateur();
 				text.setText(modele.getCurrentPath().getAbsolutePath());
 			}
@@ -154,6 +161,7 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 			JTextField text = vue.getLabelNavigateur();
 
 			if (modele.setCurrentPath(new File(text.getText()))) {
+				modele.populate();
 				text.setText(modele.getCurrentPath().getAbsolutePath());
 			}
 		}
@@ -165,6 +173,21 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void setModele(Modele modele) {
+		
+		this.modele = modele;
+		vue.setModele(modele);
+		
+	}
+
+	@Override
+	public void setVue(Vue vue) {
+		
+		this.vue = vue;
+		
 	}
 
 }

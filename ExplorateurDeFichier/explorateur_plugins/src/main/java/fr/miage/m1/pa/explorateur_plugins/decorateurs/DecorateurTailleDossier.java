@@ -1,4 +1,4 @@
-package fr.miage.m1.pa.explorateur_plugins;
+package fr.miage.m1.pa.explorateur_plugins.decorateurs;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -6,35 +6,74 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.table.AbstractTableModel;
+
 import fr.miage.m1.pa.explorateur.enums.Title;
-import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
-import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 
-public class PluginVueTailleDossier implements Plugin {
+public class DecorateurTailleDossier extends AbstractTableModel implements Modele {
 
-	@Override
-	public void plug(Controleur controleur) {
-
-		Modele modele = controleur.getModele();
-		
-		setDatas(modele);
-		
+	private Modele modele;
+	
+	public DecorateurTailleDossier(Modele modele) {
+		this.modele = modele;
 	}
 
 	@Override
-	public void unplug(Controleur controleur) {
-		controleur.getModele().reset();
-		
+	public File getFileAt(int row) {
+		return modele.getFileAt(row);
 	}
 
 	@Override
-	public String getNom() {
+	public boolean setCurrentPath(File currentPath) {
+
+		if( currentPath == null || !currentPath.exists()){
+			return false;
+		}
 		
-		return "Plugin taille dossier";
+		if(!modele.getCurrentPath().equals(currentPath)) {
+			modele.setCurrentPath(currentPath);
+			populate();
+			
+			return true;
+		}
+		
+		return false;
 	}
 
-	private void setDatas(Modele modele) {
+	@Override
+	public File getCurrentPath() {
+		return modele.getCurrentPath();
+	}
+
+	@Override
+	public List<Title> getTitles() {
+		return modele.getTitles();
+	}
+
+	@Override
+	public List<File> getFileList() {
+		return modele.getFileList();
+	}
+
+	@Override
+	public void setDatas(String[][] datas) {
+		modele.setDatas(datas);
+		fireTableDataChanged();
+	}
+	
+	@Override
+	public String getColumnName(int col) {
+		return modele.getTitles().get(col).toString();
+	}
+
+	@Override
+	public void reset() {
+		modele.populate();
+	}
+
+	@Override
+	public void populate() {
 		
 		List<File> fileList = modele.getFileList();
 		List<Title> titles = modele.getTitles();
@@ -81,6 +120,7 @@ public class PluginVueTailleDossier implements Plugin {
 		}
 		
 		modele.setDatas(datas);
+		fireTableStructureChanged();
 		
 	}
 	
@@ -119,4 +159,27 @@ public class PluginVueTailleDossier implements Plugin {
         return fileName.substring(fileName.lastIndexOf(".")+1);
         else return "";
     }
+
+	@Override
+	public int getColumnCount() {
+		return modele.getTitles().size();
+	}
+
+	@Override
+	public int getRowCount() {
+		return modele.getFileList().size();
+	}
+
+	@Override
+	public Object getValueAt(int arg0, int arg1) {
+		return modele.getDatas()[arg0][arg1];
+	}
+
+	@Override
+	public String[][] getDatas() {
+		return modele.getDatas();
+	}
+	
+
+	
 }

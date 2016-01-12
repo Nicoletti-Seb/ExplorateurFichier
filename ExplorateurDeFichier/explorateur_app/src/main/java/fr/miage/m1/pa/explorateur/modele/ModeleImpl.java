@@ -23,7 +23,7 @@ private static final long serialVersionUID = 6649734622340343522L;
 
 	public ModeleImpl(File currentPath) {
 		super();
-		this.currentPath = currentPath;
+		setCurrentPath(currentPath);
 		titles = new LinkedList<Title>(Arrays.asList(Title.values()));
 		populate();
 	}
@@ -34,15 +34,16 @@ private static final long serialVersionUID = 6649734622340343522L;
 		this.titles = titles;
 		
 		if(!currentPath.equals(this.currentPath)) {
-			this.currentPath = currentPath;
+			setCurrentPath(currentPath);
 			populate();
 		}
 	}
 
-	private void populate() {
+	@Override
+	public void populate() {
 
-		datas = new String[currentPath.listFiles().length][titles.size()];
-		fileList = Arrays.asList(currentPath.listFiles());
+		datas = new String[fileList.size()][titles.size()];
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		for(int i = 0; i < fileList.size(); i++) {
@@ -107,6 +108,7 @@ private static final long serialVersionUID = 6649734622340343522L;
 		return datas.length;
 	}
 	
+	@Override
 	public String getColumnName(int col) {
 		return titles.get(col).toString();
 	}
@@ -139,16 +141,25 @@ private static final long serialVersionUID = 6649734622340343522L;
 			return false;
 		}
 		
-		if(!this.currentPath.equals(currentPath)) {
+		if(this.currentPath == null) {
 			this.currentPath = currentPath;
-			populate();
-			
+			updateFileList();
 			return true;
+		} else {
+			if(!this.currentPath.equals(currentPath)) {
+				this.currentPath = currentPath;
+				updateFileList();
+				return true;
+			}
 		}
+		
 		
 		return false;
 	}
 
+	public void updateFileList() {
+		fileList = Arrays.asList(currentPath.listFiles());
+	}
 
 	@Override
 	public List<Title> getTitles() {
@@ -172,5 +183,11 @@ private static final long serialVersionUID = 6649734622340343522L;
 	@Override
 	public void reset() {
 		populate();
+	}
+
+
+	@Override
+	public String[][] getDatas() {
+		return datas;
 	}
 }

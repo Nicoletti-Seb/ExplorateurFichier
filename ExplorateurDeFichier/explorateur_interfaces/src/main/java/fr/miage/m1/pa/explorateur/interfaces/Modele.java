@@ -13,6 +13,8 @@ public interface Modele {
 	
 	public List<Title> getTitles();
 	public List<File> getFileList();
+	public String[][] getDatas();
 	public void setDatas(String[][] datas);
 	public void reset();
+	public void populate();
 }

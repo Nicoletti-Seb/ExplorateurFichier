@@ -17,4 +17,6 @@ public interface Vue {
 	public JTable getMainTable();
 	public JTextField getLabelNavigateur();
 	public void setPluginMenu(List<String> plugins);
+	
+	public void setModele(Modele modele);
 }

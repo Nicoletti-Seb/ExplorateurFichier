@@ -81,4 +81,10 @@ public class PluginVueCouleurFichier implements Plugin {
 	public static void main(String[] args) {
 		System.out.println("Build class");
 	}
+
+	@Override
+	public Class getDecorator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

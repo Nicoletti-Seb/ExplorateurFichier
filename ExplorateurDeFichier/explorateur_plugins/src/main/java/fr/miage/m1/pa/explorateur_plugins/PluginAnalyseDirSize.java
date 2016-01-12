@@ -23,6 +23,12 @@ public class PluginAnalyseDirSize implements Plugin {
 		return null;
 	}
 
+	@Override
+	public Class getDecorator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 }

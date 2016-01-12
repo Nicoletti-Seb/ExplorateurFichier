@@ -34,6 +34,10 @@ public class ExplorateurPanel extends JPanel{
 		
 	}
 	
+	public void setModel(Modele modele) {
+		mainTable.setModel((TableModel)modele);
+	}
+	
 	
 	public void setMouseListener(MouseListener listener) {
 		mainTable.addMouseListener(listener);

@@ -4,6 +4,8 @@ public interface Plugin {
 	
 	public void plug( Controleur controleur );
 	public void unplug( Controleur controleur );
+	
 	public String getNom();
+	public Class getDecorator();
 	
 }
