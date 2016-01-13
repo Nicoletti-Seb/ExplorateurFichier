@@ -168,11 +168,12 @@ private static final long serialVersionUID = 6649734622340343522L;
 	public void reset() {
 		populate();
 	}
+	//a remplir 
 	@Override
 	public JTable DataTable() {
 		return null;
 	}
-
+//a remplir 
 	@Override
 	public TableModel DataModel() {
 		// Recuperer TableModel du Jtable

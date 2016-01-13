@@ -25,7 +25,7 @@ public class PluginVueCouleurFichier implements Plugin {
 
 		Modele modele = controleur.getModele();
 
-		ChangeColorRight(modele);
+		setDatas(modele);
 
 	}
 
@@ -40,18 +40,19 @@ public class PluginVueCouleurFichier implements Plugin {
 		return "VueCouleurFichier";
 	}
 
-	private void ChangeColorRight(Modele modele) {
+	private void setDatas(Modele modele) {
 
 		List<File> fileList = modele.getFileList();
 		JTable jtable = new JTable(tableModel);
-		JPanel jpanel = new JPanel();
-		JScrollPane scrollTable = new JScrollPane(jtable);
-		jpanel.add(scrollTable);
+	
 		for (int i = 0; i < fileList.size(); i++) {
 			File f = fileList.get(i);
 			getNewRenderedTable(jtable, f);
 
 		}
+		JPanel jpanel = new JPanel();
+		JScrollPane scrollTable = new JScrollPane(jtable);
+		jpanel.add(scrollTable);
 
 	}
 
