@@ -92,5 +92,8 @@ public class ChargeurPluginTest {
 		public int getNbGetModele(){
 			return nbGetModele;
 		}
+
+		@Override
+		public void setModele(Modele model) {}
 	}
 }

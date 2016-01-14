@@ -52,8 +52,8 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 	}
 
 	private void init() {
-		saveManager.retrieveState(managerPlugin);
-		saveManager.retrieveState(this);
+		//saveManager.retrieveState(managerPlugin);
+		//saveManager.retrieveState(this);
 	}
 
 	@Override
@@ -166,6 +166,11 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void setModele(Modele model) {
+		this.modele = model;
 	}
 
 }

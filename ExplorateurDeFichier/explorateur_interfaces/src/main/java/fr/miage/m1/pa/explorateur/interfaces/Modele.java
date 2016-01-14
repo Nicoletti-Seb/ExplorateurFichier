@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import fr.miage.m1.pa.explorateur.enums.Title;
+import fr.miage.m1.pa.explorateur.enums.TypeModele;
 
 public interface Modele {
 
@@ -15,4 +16,6 @@ public interface Modele {
 	public List<File> getFileList();
 	public void setDatas(String[][] datas);
 	public void reset();
+	
+	public TypeModele getType();
 }

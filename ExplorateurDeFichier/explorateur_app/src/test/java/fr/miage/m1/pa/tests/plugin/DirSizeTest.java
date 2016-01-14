@@ -60,11 +60,13 @@ package fr.miage.m1.pa.tests.plugin;
 			}
 			return taille;
 		}
+		
 		@Test
 		public void unplug() {
 			// TODO Auto-generated method stub
 
 		}
+		
 		private class ControleurMock implements Controleur {
 			private int nbGetVue;
 			private int nbGetModele;
@@ -86,6 +88,11 @@ package fr.miage.m1.pa.tests.plugin;
 			}
 			public int getNbGetModele() {
 				return nbGetModele;
+			}
+
+			@Override
+			public void setModele(Modele model) {
+				// TODO Auto-generated method stub
 			}
 		}
 

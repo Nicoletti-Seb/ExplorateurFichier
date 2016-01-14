@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import fr.miage.m1.pa.explorateur.enums.Title;
+import fr.miage.m1.pa.explorateur.enums.TypeModele;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
 
 public class ModeleImpl extends AbstractTableModel implements Modele {
@@ -79,7 +80,7 @@ private static final long serialVersionUID = 6649734622340343522L;
 			}
 		}
 		
-		fireTableDataChanged();
+		setDatas(datas);
 	}
 
 	private String humanReadableByteCount(long bytes, boolean si) {
@@ -172,5 +173,11 @@ private static final long serialVersionUID = 6649734622340343522L;
 	@Override
 	public void reset() {
 		populate();
+	}
+
+
+	@Override
+	public TypeModele getType() {
+		return TypeModele.MODEL;
 	}
 }
