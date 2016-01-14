@@ -2,9 +2,12 @@ package fr.miage.m1.pa.explorateur_plugins;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -14,77 +17,53 @@ import javax.swing.table.DefaultTableModel;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
+import fr.miage.m1.pa.explorateur.interfaces.PluginListener;
+import fr.miage.m1.pa.explorateur_plugins.decorateurs.DecorateurCouleurFichier;
+import fr.miage.m1.pa.explorateur_plugins.gestionaire.GestionairePlugins;
+import fr.miage.m1.pa.explorateur_plugins.helper.PluginHelper;
 
 public class PluginVueCouleurFichier implements Plugin {
-	DefaultTableModel tableModel;
 
 	@Override
 	public void plug(Controleur controleur) {
 
-		Modele modele = controleur.getModele();
-		
-		ChangeColorRight(modele);
+		GestionairePlugins gPlugin = GestionairePlugins.getInstance(controleur.getModele(), controleur.getVue());
+		controleur.setVue(gPlugin.addVuePlugin(this));
 		
 	}
 
 	@Override
 	public void unplug(Controleur controleur) {
-		controleur.getModele().reset();
 		
+		GestionairePlugins gPlugin = GestionairePlugins.getInstance(controleur.getModele(), controleur.getVue());
+		controleur.setVue(gPlugin.removeVuePlugin(this));
 	}
 
 	@Override
 	public String getNom() {
 		return "VueCouleurFichier";
 	}
-	
-	private void ChangeColorRight(Modele modele){
-		List<File> fileList = modele.getFileList();
-		
-	
-	JTable jtable= new JTable(tableModel);
-	JPanel jpanel =new JPanel();
-	JScrollPane scrollTable = new JScrollPane(jtable);
-	jpanel.add(scrollTable);
-	
-	for (File file : fileList) {
-		getNewRenderedTable(jtable, file);
-	}
-	
-		
-	}
-	
-	private static JTable getNewRenderedTable(final JTable table, File f) {
-		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-			
-			@Override
-			public Component getTableCellRendererComponent(JTable table,
-					Object value, boolean isSelected, boolean hasFocus,int row, int col) {
-		
-					Component c = super.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, col);
-						
-						if (f.canWrite()==false && f.canExecute()==false) {
-							c.setForeground(Color.red);
-						} else {
-							setBackground(table.getBackground());
-							setForeground(table.getForeground());
-						}
-					
-			
-
-				return this;
-			}
-		});
-		return table;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println("Build class");
-	}
 
 	@Override
 	public Class getDecorator() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return DecorateurCouleurFichier.class;
 	}
+
+	@Override
+	public void showView(boolean isActive, PluginListener listener) {
+		
+		JFrame view = PluginHelper.getBaseFrame(getNom(), isActive, null, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(listener != null) listener.onStateChecked(getNom());
+				
+			}
+		});
+		view.setVisible(true);
+		
+	}
+
 }

@@ -1,7 +1,10 @@
 package fr.miage.m1.pa.explorateur_plugins;
 
+import javax.swing.JFrame;
+
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
+import fr.miage.m1.pa.explorateur.interfaces.PluginListener;
 
 public class PluginAnalyseDirSize implements Plugin {
 
@@ -27,6 +30,13 @@ public class PluginAnalyseDirSize implements Plugin {
 	public Class getDecorator() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void showView(boolean isActive, PluginListener listener) {
+		
+		
+		
 	}
 
 	

@@ -37,6 +37,49 @@ public class GestionairePlugins {
 		return instance;
 	}
 	
+	public Vue addVuePlugin(Plugin plugin) {
+		
+		vuePlugins.add(plugin);
+		
+		return getCurrentVue();
+	}
+	
+	public Vue removeVuePlugin(Plugin plugin) {
+		
+		vuePlugins.remove(plugin);
+		
+		return getCurrentVue();
+	}
+	
+	private Vue getCurrentVue() {
+		
+		Vue result = baseVue;
+		
+		for(Plugin p : analysePlugins) {
+			
+			try {
+				Constructor c = p.getDecorator().getConstructor(Vue.class);
+				try {
+					result = (Vue) c.newInstance(result);
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
 	public Modele addAnalysePlugin(Plugin plugin) {
 		
 		analysePlugins.add(plugin);

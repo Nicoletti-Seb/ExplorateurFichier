@@ -15,12 +15,13 @@ import java.util.Map;
 import fr.miage.m1.pa.explorateur.controleur.classloader.RepositoryG;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
+import fr.miage.m1.pa.explorateur.interfaces.PluginListener;
 import fr.miage.m1.pa.explorateur.interfaces.Saving;
 
 /**
  * Cette class permet de charger et gérer les plugins disponibles.
  */
-public class ManageurPlugin implements Saving {
+public class ManageurPlugin implements Saving, PluginListener {
 
 	private static final String STATE_FILE = "ManageurPlugin";
 	private static final String PATH = "../explorateur_plugins/target/classes";
@@ -54,6 +55,12 @@ public class ManageurPlugin implements Saving {
 		}
 
 		return listePlugin.get(plugin);
+	}
+	
+	public void showPluginView(String nomPlugin) {
+		
+		Plugin plugin = getPlugin(nomPlugin);
+		if(plugin != null) plugin.showView(pluginEstActive(nomPlugin), this);
 	}
 
 	/**
@@ -259,6 +266,18 @@ public class ManageurPlugin implements Saving {
 		
 		Map<String, Boolean> etatPlugin = (Map<String, Boolean>) obj;
 		if(etatPlugin != null) updatePlugin(etatPlugin);
+	}
+
+	@Override
+	public void onStateChecked(String nomPlugin) {
+		
+		if(pluginEstActive(nomPlugin)) {
+			desactiverPlugin(nomPlugin);
+		} else {
+			activerPlugin(nomPlugin);
+		}
+		
+		
 	}
 	
 

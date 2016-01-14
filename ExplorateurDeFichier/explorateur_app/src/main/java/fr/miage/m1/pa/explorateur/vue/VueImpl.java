@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.table.TableCellRenderer;
 
 import fr.miage.m1.pa.explorateur.interfaces.ControleurVueListener;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
@@ -54,6 +55,7 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 		menuPlugin = new JMenu("Plugins");
 		menuBar.add(menuPlugin);
 
+		/*
 		menuPlugin.addMenuListener(new MenuListener() {
 			@Override
 			public void menuSelected(MenuEvent e) {
@@ -69,7 +71,9 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 			@Override
 			public void menuCanceled(MenuEvent e) {
 			}
-		});
+		});*/
+		
+		
 		
 		setContentPane(mainPanel);
 
@@ -90,6 +94,12 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 		return mainPanel.getMainTable();
 	}
 
+	@Override
+	public void setCellRenderer(TableCellRenderer renderer) {
+		mainPanel.setCellRenderer(renderer);
+		
+	}
+	
 	@Override
 	public void setPluginMenu(List<String> plugins) {
 		for (final String plugin : plugins) {

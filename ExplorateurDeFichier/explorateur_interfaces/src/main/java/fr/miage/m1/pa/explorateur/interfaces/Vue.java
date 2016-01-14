@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableCellRenderer;
 
 public interface Vue {
 	public void setMouseListener(MouseListener listener);
@@ -17,6 +18,7 @@ public interface Vue {
 	public JTable getMainTable();
 	public JTextField getLabelNavigateur();
 	public void setPluginMenu(List<String> plugins);
+	public void setCellRenderer(TableCellRenderer renderer);
 	
 	public void setModele(Modele modele);
 }

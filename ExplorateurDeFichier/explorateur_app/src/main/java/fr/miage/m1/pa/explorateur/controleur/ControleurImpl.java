@@ -1,5 +1,6 @@
 package fr.miage.m1.pa.explorateur.controleur;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -7,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +52,7 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 
 		saveManager.retrieveState(managerPlugin);
 		
-		// vue.setPluginMenu(managerPlugin.getPlugins());
+		vue.setPluginMenu(managerPlugin.getPlugins());
 		vue.setMouseListener(this);
 		vue.setControleurListener(this);
 		vue.setActionListener(this);
@@ -73,8 +75,15 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 		if (e.getSource().equals(vue.getMainTable())) {
 			if (e.getClickCount() == 2) {
 				File f = modele.getFileAt(vue.getMainTable().getSelectedRow());
-				setCurrentPath(f);
-
+				if(f.isDirectory()) {
+					setCurrentPath(f);
+				} else {
+					try {
+						Desktop.getDesktop().open(f);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
 			}
 		}
 	}
@@ -96,6 +105,8 @@ public class ControleurImpl implements Controleur, KeyListener, ActionListener, 
 
 		if (name.equals("Plugins")) {
 			new ManageurPluginVue(this, managerPlugin);
+		} else {
+			managerPlugin.showPluginView(name);
 		}
 
 	}

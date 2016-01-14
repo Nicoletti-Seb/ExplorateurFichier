@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
@@ -32,6 +33,11 @@ public class ExplorateurPanel extends JPanel{
 		scrollPane = new JScrollPane(mainTable);
 		this.add(scrollPane, BorderLayout.CENTER);
 		
+	}
+	
+	public void setCellRenderer(TableCellRenderer renderer) {
+		
+		mainTable.getColumnModel().getColumn(0).setCellRenderer(renderer);
 	}
 	
 	public void setModel(Modele modele) {

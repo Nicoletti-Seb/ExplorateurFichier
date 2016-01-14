@@ -13,6 +13,20 @@ public enum Title {
 	Title(String name){
 		this.name = name;
 	}
+	
+	public static Title fromString(String name) {
+		
+		switch(name) {
+		
+		case "Nom" : return NAME;
+		case "Modifié le" : return MODIFIED;
+		case "Type" : return TYPE;
+		case "Taille" : return SIZE;
+		
+		}
+		
+		return NAME;
+	}
 
 	public String toString(){
 		return name;
