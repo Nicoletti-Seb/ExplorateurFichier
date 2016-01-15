@@ -88,6 +88,8 @@ public class VueImpl extends JFrame implements Vue, Observer {
 		
 		this.vueNavigator = vue;
 		getContentPane().add(vueNavigator, BorderLayout.NORTH);
+		
+		vueNavigator = vue;
 	}
 
 	@Override
@@ -101,6 +103,8 @@ public class VueImpl extends JFrame implements Vue, Observer {
 		
 		this.vueExplorer = vue;
 		getContentPane().add(vueExplorer, BorderLayout.CENTER);
+		
+		vueExplorer = vue;
 	}
 
 	@Override
