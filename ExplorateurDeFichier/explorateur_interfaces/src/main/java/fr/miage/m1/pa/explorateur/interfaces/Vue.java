@@ -1,20 +1,20 @@
 package fr.miage.m1.pa.explorateur.interfaces;
 
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import java.util.List;
 
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import fr.miage.m1.pa.explorateur.abstracts.VueExplorer;
+import fr.miage.m1.pa.explorateur.abstracts.VueNavigator;
 
 public interface Vue {
-	public void setMouseListener(MouseListener listener);
-	public void setControleurListener(ControleurVueListener listener);
-	public void setActionListener(ActionListener listener);
-	public void setKeyListener(KeyListener listener);
-	
-	public JTable getMainTable();
-	public JTextField getLabelNavigateur();
 	public void setPluginMenu(List<String> plugins);
+	
+	public void setVueNavigator(VueNavigator vue);
+	public VueNavigator getVueNavigator();
+	
+	public void setVueExplorer(VueExplorer vue);
+	public VueExplorer getVueExplorer();
+	
+	public void addVueExplorerListener(VueExplorerListener listener);
+	public void addVueNavigatorListener(VueNavigatorListener listener);
+	public void addControllerVueListener(ControleurVueListener listener);
 }

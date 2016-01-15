@@ -3,47 +3,56 @@ package fr.miage.m1.pa.explorateur.vue;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.File;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
+import fr.miage.m1.pa.explorateur.abstracts.VueExplorer;
+import fr.miage.m1.pa.explorateur.abstracts.VueNavigator;
 import fr.miage.m1.pa.explorateur.interfaces.ControleurVueListener;
-import fr.miage.m1.pa.explorateur.interfaces.Modele;
+import fr.miage.m1.pa.explorateur.interfaces.FileReader;
 import fr.miage.m1.pa.explorateur.interfaces.Vue;
+import fr.miage.m1.pa.explorateur.interfaces.VueExplorerListener;
+import fr.miage.m1.pa.explorateur.interfaces.VueNavigatorListener;
 
-public class VueImpl extends JFrame implements Vue, WindowListener {
+public class VueImpl extends JFrame implements Vue, Observer {
 
 	private static final long serialVersionUID = 2636414275903248790L;
 
-	private ExplorateurPanel mainPanel;
 	private JMenu menuPlugin;
-	private BarNavigateur barNavigateur;
-	private ControleurVueListener listener;
+	private VueNavigator vueNavigator;
+	private VueExplorer vueExplorer;
 
-	public VueImpl(Modele modele) {
-		mainPanel = new ExplorateurPanel(modele);
-		getContentPane().add(mainPanel, BorderLayout.CENTER);
-		
+	private ControleurVueListener controleurlistener;
+
+	public VueImpl() {
+		vueExplorer = new VueExplorerImpl();
+		vueNavigator = new VueNavigatorImpl();
+
+		getContentPane().add(vueExplorer, BorderLayout.CENTER);
+		getContentPane().add(vueNavigator, BorderLayout.NORTH);
+
 		initMenu();
 
-		barNavigateur = new BarNavigateur();
-		barNavigateur.setChemin(modele.getCurrentPath().getAbsolutePath());
-		this.add(barNavigateur, BorderLayout.NORTH);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				controleurlistener.onClose();
+				super.windowClosed(e);
+			}
+		});
 
 		pack();
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 
@@ -54,40 +63,13 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 		menuPlugin = new JMenu("Plugins");
 		menuBar.add(menuPlugin);
 
-		menuPlugin.addMenuListener(new MenuListener() {
-			@Override
-			public void menuSelected(MenuEvent e) {
-				if (listener != null) {
-					listener.onMenuClicked("Plugins");
-				}
-			}
-
-			@Override
-			public void menuDeselected(MenuEvent e) {
-			}
-
-			@Override
-			public void menuCanceled(MenuEvent e) {
+		menuPlugin.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				controleurlistener.onMenuClicked("Plugins");
+				System.out.println();
 			}
 		});
-		
-		setContentPane(mainPanel);
-
-		pack();
-		addWindowListener(this);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-	}
-
-	@Override
-	public void setMouseListener(MouseListener listener) {
-		mainPanel.setMouseListener(listener);
-		barNavigateur.setMouseListener(listener);
-	}
-
-	@Override
-	public JTable getMainTable() {
-		return mainPanel.getMainTable();
 	}
 
 	@Override
@@ -97,8 +79,8 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 			menuItem.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (listener != null) {
-						listener.onMenuClicked(plugin);
+					if (controleurlistener != null) {
+						controleurlistener.onMenuClicked(plugin);
 					}
 				}
 
@@ -108,63 +90,61 @@ public class VueImpl extends JFrame implements Vue, WindowListener {
 	}
 
 	@Override
-	public void setControleurListener(ControleurVueListener listener) {
-		this.listener = listener;
+	public void addControllerVueListener(ControleurVueListener listener) {
+		this.controleurlistener = listener;
 	}
 
 	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
+	public void setVueNavigator(VueNavigator vue) {
+		getContentPane().remove(vueNavigator);
 		
+		this.vueNavigator = vue;
+		getContentPane().add(vueNavigator, BorderLayout.NORTH);
 	}
 
 	@Override
-	public void windowClosed(WindowEvent e) {
+	public VueNavigator getVueNavigator() {
+		return vueNavigator;
+	}
+
+	@Override
+	public void setVueExplorer(VueExplorer vue) {
+		getContentPane().remove(vueExplorer);
 		
+		this.vueExplorer = vue;
+		getContentPane().add(vueExplorer, BorderLayout.CENTER);
 	}
 
 	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
+	public VueExplorer getVueExplorer() {
+		return vueExplorer;
+	}
+
+	@Override
+	public void addVueExplorerListener(VueExplorerListener listener) {
+		vueExplorer.addVueExplorerListener(listener);
+	}
+
+	@Override
+	public void addVueNavigatorListener(VueNavigatorListener listener) {
+		vueNavigator.addVueNavigateurListener(listener);
+	}
+
+	@Override
+	public void update(Observable o, Object obj) {
+		FileReader fileReader = (FileReader) obj;
 		
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
+		//update vue explorer
+		vueExplorer.clean();
+		for( FileReader f : fileReader.getListFileReader() ){
+			vueExplorer.addFileToDiplay(f);
+		}
 		
+		//update vue navigator
+		vueNavigator.setPathFile(fileReader.getPath());
 	}
-
-	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
+	
+	public void addControleurVueListener(ControleurVueListener listener){
+		controleurlistener = listener;
 	}
-
-	@Override
-	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowClosing(WindowEvent e) {
-		listener.onClose();
-		
-	}
-
-	public void setActionListener(ActionListener listener) {
-		barNavigateur.setActionListener(listener);
-	}
-
-	@Override
-	public void setKeyListener(KeyListener listener) {
-		barNavigateur.setKeyListener(listener);
-	}
-
-	@Override
-	public JTextField getLabelNavigateur() {
-		return barNavigateur.getLabelNavigateur();
-	}
-
 }

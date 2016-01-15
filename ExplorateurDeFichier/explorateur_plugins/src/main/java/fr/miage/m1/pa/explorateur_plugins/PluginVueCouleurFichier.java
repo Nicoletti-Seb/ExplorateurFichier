@@ -3,6 +3,7 @@ package fr.miage.m1.pa.explorateur_plugins;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -29,7 +30,7 @@ public class PluginVueCouleurFichier implements Plugin {
 
 	@Override
 	public void unplug(Controleur controleur) {
-		controleur.getModele().reset();
+		//controleur.getModele().reset();
 		
 	}
 
@@ -39,7 +40,7 @@ public class PluginVueCouleurFichier implements Plugin {
 	}
 	
 	private void ChangeColorRight(Modele modele){
-		List<File> fileList = modele.getFileList();
+		List<File> fileList = Arrays.asList(modele.getCurrentPath().listFiles());
 		
 	
 	JTable jtable= new JTable(tableModel);

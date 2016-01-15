@@ -1,10 +1,8 @@
 package fr.miage.m1.pa.explorateur_plugins.decorator;
 
 import java.io.File;
-import java.util.List;
 
 import fr.miage.m1.pa.explorateur.decorator.ModeleDecorator;
-import fr.miage.m1.pa.explorateur.enums.Title;
 
 public class PluginVueTailleDossierDecorator extends ModeleDecorator {
 
@@ -16,7 +14,7 @@ public class PluginVueTailleDossierDecorator extends ModeleDecorator {
 	@Override
 	public void onPlug() {
 		System.out.println("onPlug");
-		reset();
+		//reset();
 	}
 
 	@Override
@@ -24,7 +22,7 @@ public class PluginVueTailleDossierDecorator extends ModeleDecorator {
 		System.out.println("onUnplug");
 	}
 
-	@Override
+	/*@Override
 	public void setDatas(String[][] datas) {
 		modeleToDecorate.setDatas(datas);
 		
@@ -46,7 +44,7 @@ public class PluginVueTailleDossierDecorator extends ModeleDecorator {
 
 			}
 		}
-	}
+	}*/
 
 	private String readDirSize(File dir) {
 		return humanReadableByteCount(getDirSize(dir), true);

@@ -1,11 +1,10 @@
 package fr.miage.m1.pa.explorateur.decorator;
 
 import java.io.File;
-import java.util.List;
 
-import fr.miage.m1.pa.explorateur.enums.Title;
 import fr.miage.m1.pa.explorateur.enums.TypeModele;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
+import fr.miage.m1.pa.explorateur.interfaces.FileReader;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 
@@ -19,11 +18,6 @@ public abstract class ModeleDecorator implements Modele, Plugin{
 	public abstract void onUnplug();
 	
 	@Override
-	public File getFileAt(int row) {
-		return modeleToDecorate.getFileAt(row);
-	}
-
-	@Override
 	public boolean setCurrentPath(File currentPath) {
 		return modeleToDecorate.setCurrentPath(currentPath);
 	}
@@ -32,25 +26,15 @@ public abstract class ModeleDecorator implements Modele, Plugin{
 	public File getCurrentPath() {
 		return modeleToDecorate.getCurrentPath();
 	}
-
+	
 	@Override
-	public List<Title> getTitles() {
-		return modeleToDecorate.getTitles();
+	public void setFileReader(FileReader fileReader){
+		modeleToDecorate.setFileReader(fileReader);
 	}
-
+	
 	@Override
-	public List<File> getFileList() {
-		return modeleToDecorate.getFileList();
-	}
-
-	@Override
-	public void setDatas(String[][] datas) {
-		modeleToDecorate.setDatas(datas);
-	}
-
-	@Override
-	public void reset() {
-		modeleToDecorate.reset();
+	public FileReader getFileReader(){
+		return modeleToDecorate.getFileReader();
 	}
 	
 	@Override

@@ -1,12 +1,7 @@
 package fr.miage.m1.pa.explorateur_plugins;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
-import fr.miage.m1.pa.explorateur.enums.Title;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
@@ -18,13 +13,13 @@ public class PluginVueTailleDossier implements Plugin {
 
 		Modele modele = controleur.getModele();
 		
-		setDatas(modele);
+		//setDatas(modele);
 		
 	}
 
 	@Override
 	public void unplug(Controleur controleur) {
-		controleur.getModele().reset();
+		//controleur.getModele().reset();
 		
 	}
 
@@ -34,7 +29,7 @@ public class PluginVueTailleDossier implements Plugin {
 		return "Plugin taille dossier";
 	}
 
-	private void setDatas(Modele modele) {
+	/*private void setDatas(Modele modele) {
 		
 		List<File> fileList = modele.getFileList();
 		List<Title> titles = modele.getTitles();
@@ -82,7 +77,7 @@ public class PluginVueTailleDossier implements Plugin {
 		
 		modele.setDatas(datas);
 		
-	}
+	}*/
 	
 	private String readDirSize(File dir) {
 		

@@ -1,24 +1,22 @@
 package fr.miage.m1.pa.explorateur.vue;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import fr.miage.m1.pa.explorateur.abstracts.VueNavigator;
 import fr.miage.m1.pa.explorateur.controleur.ControleurImpl;
+import fr.miage.m1.pa.explorateur.interfaces.VueNavigatorListener;
 
-public class BarNavigateur extends JPanel{
+public class VueNavigatorImpl extends VueNavigator{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private JButton boutonPrec;
 	private JTextField textChemin;
 	
-	public BarNavigateur() {
+	public VueNavigatorImpl() {
 		boutonPrec = new JButton("<");
 		boutonPrec.setActionCommand(ControleurImpl.ACTION_PRECEDENT);
 		
@@ -30,23 +28,19 @@ public class BarNavigateur extends JPanel{
 		add(textChemin, BorderLayout.CENTER);
 	}
 
-	public void setChemin(String chemin){
-		textChemin.setText(chemin);
-	}
-	
-	public void setMouseListener(MouseListener listener) {
-		boutonPrec.addMouseListener(listener);
+	@Override
+	public void setPathFile(String path) {
+		textChemin.setText(path);
 	}
 
-	public void setActionListener(ActionListener listener){
+	@Override
+	public void addVueNavigateurListener(VueNavigatorListener listener) {
 		boutonPrec.addActionListener(listener);
-	}
-
-	public void setKeyListener(KeyListener listener) {
 		textChemin.addKeyListener(listener);
 	}
 
-	public JTextField getLabelNavigateur() {
-		return textChemin;
+	@Override
+	public String getPathFile() {
+		return textChemin.getText();
 	}
 }
