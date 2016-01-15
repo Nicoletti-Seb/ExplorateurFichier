@@ -14,4 +14,6 @@ public interface Vue {
 	public void addVueExplorerListener(VueExplorerListener listener);
 	public void addVueNavigatorListener(VueNavigatorListener listener);
 	public void addControllerVueListener(ControleurVueListener listener);
+	
+	public void update();
 }

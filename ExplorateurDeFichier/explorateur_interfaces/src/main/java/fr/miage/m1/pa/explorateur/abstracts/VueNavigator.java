@@ -8,7 +8,20 @@ public abstract class VueNavigator extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	
+	protected VueNavigatorListener navigatorListener;
+	
 	public abstract void setPathFile(String path);
 	public abstract String getPathFile();
-	public abstract void addVueNavigateurListener(VueNavigatorListener listener);
+	
+	public void addVueNavigatorListener(VueNavigatorListener listener){
+		this.navigatorListener = listener;
+	}
+	
+	public VueNavigatorListener getVueNavigateurListener(){
+		return navigatorListener;
+	}
+	
+	public void removeNavigatorListener(){
+		 navigatorListener = null;
+	}
 }

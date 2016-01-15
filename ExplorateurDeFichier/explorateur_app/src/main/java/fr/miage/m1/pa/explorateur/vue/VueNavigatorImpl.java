@@ -34,9 +34,17 @@ public class VueNavigatorImpl extends VueNavigator{
 	}
 
 	@Override
-	public void addVueNavigateurListener(VueNavigatorListener listener) {
+	public void addVueNavigatorListener(VueNavigatorListener listener) {
+		super.addVueNavigatorListener(listener);
 		boutonPrec.addActionListener(listener);
 		textChemin.addKeyListener(listener);
+	}
+	
+	@Override
+	public void removeNavigatorListener(){
+		super.removeNavigatorListener();
+		boutonPrec.removeActionListener(getVueNavigateurListener());
+		textChemin.removeKeyListener(getVueNavigateurListener());
 	}
 
 	@Override

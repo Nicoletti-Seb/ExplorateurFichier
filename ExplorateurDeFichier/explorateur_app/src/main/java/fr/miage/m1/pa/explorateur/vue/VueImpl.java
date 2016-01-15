@@ -115,7 +115,7 @@ public class VueImpl extends JFrame implements Vue, Observer {
 
 	@Override
 	public void addVueNavigatorListener(VueNavigatorListener listener) {
-		vueNavigator.addVueNavigateurListener(listener);
+		vueNavigator.addVueNavigatorListener(listener);
 	}
 
 	@Override
@@ -134,5 +134,10 @@ public class VueImpl extends JFrame implements Vue, Observer {
 	
 	public void addControleurVueListener(ControleurVueListener listener){
 		controleurlistener = listener;
+	}
+
+	@Override
+	public void update() {
+		validate();
 	}
 }

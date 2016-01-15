@@ -146,6 +146,7 @@ public class ControleurImpl implements Controleur, ControleurVueListener, Manage
 	@Override
 	public void update() {
 		modele.update();
+		vue.update();
 	}
 
 }

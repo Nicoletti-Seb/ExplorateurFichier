@@ -54,8 +54,15 @@ public class VueExplorerImpl extends VueExplorer{
 	}
 
 	@Override
-	public void addVueExplorerListener(VueExplorerListener listener) {
+	public void addVueExplorerListener(VueExplorerListener listener){
+		super.addVueExplorerListener(listener);
 		mainTable.addMouseListener(listener);
+	}
+	
+	@Override
+	public void removeExplorerListener(){
+		super.removeExplorerListener();
+		mainTable.removeMouseListener(getVueExplorerListener());
 	}
 
 	

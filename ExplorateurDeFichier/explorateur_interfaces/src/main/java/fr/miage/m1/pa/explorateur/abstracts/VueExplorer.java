@@ -9,8 +9,21 @@ public abstract class VueExplorer extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
+	protected VueExplorerListener explorerListener;
+	
 	public abstract void addFileToDiplay(FileReader fileReader);
 	public abstract void clean();
-	public abstract void addVueExplorerListener(VueExplorerListener listener);
 	public abstract FileReader getFileSelected();
+	
+	public void addVueExplorerListener(VueExplorerListener listener){
+		this.explorerListener = listener;
+	}
+	
+	public VueExplorerListener getVueExplorerListener(){
+		return explorerListener;
+	}
+	
+	public void removeExplorerListener(){
+		explorerListener = null;
+	}
 }
