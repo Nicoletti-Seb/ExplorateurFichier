@@ -4,11 +4,9 @@ import java.io.File;
 import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import fr.miage.m1.pa.explorateur.controleur.classloader.DynamicPluginLoader;
-import fr.miage.m1.pa.explorateur.controleur.classloader.RepositoryG;
 import fr.miage.m1.pa.explorateur.controleur.listener.VueExplorerListenerImpl;
 import fr.miage.m1.pa.explorateur.controleur.listener.VueNavigatorListenerImpl;
 import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPlugin;
@@ -67,8 +65,8 @@ public class ControleurImpl implements Controleur, ControleurVueListener, Manage
 	}
 
 	private void init() {
-		//saveManager.retrieveState(managerPlugin);
-		//saveManager.retrieveState(this);
+		saveManager.retrieveState(managerPlugin);
+		saveManager.retrieveState(this);
 	}
 
 	@Override

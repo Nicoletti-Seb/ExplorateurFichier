@@ -1,17 +1,16 @@
 package fr.miage.m1.pa.tests.plugin;
 
 	import java.io.File;
-	import java.util.List;
+import java.util.List;
 
-	import org.junit.Assert;
-	import org.junit.Before;
-	import org.junit.Ignore;
-	import org.junit.Test;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-	import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPlugin;
-	import fr.miage.m1.pa.explorateur.interfaces.Controleur;
-	import fr.miage.m1.pa.explorateur.interfaces.Modele;
-	import fr.miage.m1.pa.explorateur.interfaces.Vue;
+import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPlugin;
+import fr.miage.m1.pa.explorateur.interfaces.Controleur;
+import fr.miage.m1.pa.explorateur.interfaces.Modele;
+import fr.miage.m1.pa.explorateur.interfaces.Vue;
 
 	public class DirSizeTest {
 		private static final String PATH = "src/test/ressources/classes";

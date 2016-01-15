@@ -3,7 +3,6 @@ package fr.miage.m1.pa.explorateur.vue;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
@@ -41,8 +40,9 @@ public class VueImpl extends JFrame implements Vue, Observer {
 		initMenu();
 
 		addWindowListener(new WindowAdapter() {
+
 			@Override
-			public void windowClosed(WindowEvent e) {
+			public void windowClosing(WindowEvent e) {
 				controleurlistener.onClose();
 				super.windowClosed(e);
 			}
