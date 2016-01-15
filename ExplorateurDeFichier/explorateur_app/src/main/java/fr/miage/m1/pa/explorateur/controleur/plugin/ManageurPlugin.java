@@ -138,6 +138,20 @@ public class ManageurPlugin implements Saving {
 
 		return true;
 	}
+	
+	public void addPlugins(List<Class<? extends Plugin>> plugins) {
+		
+		for (Class<? extends Plugin> cl : plugins) {
+			try {
+				Plugin plugin = cl.newInstance();
+				listePlugin.put(plugin, false);
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	/**
 	 * @return la liste de tous les plugins charger
@@ -225,7 +239,7 @@ public class ManageurPlugin implements Saving {
 		}
 	}
 
-	private Plugin getPlugin(String nomPlugin) {
+	public Plugin getPlugin(String nomPlugin) {
 		if (nomPlugin == null || nomPlugin.isEmpty()) {
 			return null;
 		}

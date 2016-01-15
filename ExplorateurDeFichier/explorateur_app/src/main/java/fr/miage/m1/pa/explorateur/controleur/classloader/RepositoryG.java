@@ -19,7 +19,6 @@ public class RepositoryG <T> {
 		//init class loader
 		List<File> paths = new ArrayList<>();
 		paths.add(file);
-		paths.add(file);
 		
 		classLoader = new ExplorateurClassLoader(paths);
 	}

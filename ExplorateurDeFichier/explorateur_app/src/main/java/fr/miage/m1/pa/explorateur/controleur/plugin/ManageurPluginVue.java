@@ -1,13 +1,17 @@
 package fr.miage.m1.pa.explorateur.controleur.plugin;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 
 
 public class ManageurPluginVue extends JFrame {
@@ -34,7 +38,10 @@ public class ManageurPluginVue extends JFrame {
 		
 		List<String> plugins = managerPlugin.getPlugins();
 		for(String plugin : plugins) {
-			mainPanel.add(getComponentForPlugin(plugin, managerPlugin.pluginEstActive(plugin)));
+			
+			Plugin p = managerPlugin.getPlugin(plugin);
+			mainPanel.add(getComponentForPlugin(p));
+			
 		}
 				
 		setContentPane(mainPanel);
@@ -45,7 +52,16 @@ public class ManageurPluginVue extends JFrame {
 		setVisible(true);
 	}
 	
-	private JCheckBox getComponentForPlugin(final String plugin, boolean active) {
+	private JComponent getComponentForPlugin(Plugin plugin) {
+		
+		if(plugin.getPanelConfig() != null) {
+			return getPanelForPlugin(plugin, managerPlugin.pluginEstActive(plugin.getNom()));
+		} else {
+			return getCheckBoxForPlugin(plugin.getNom(), managerPlugin.pluginEstActive(plugin.getNom()));
+		}
+	}
+	
+	private JCheckBox getCheckBoxForPlugin(final String plugin, boolean active) {
 		
 		JCheckBox checkBox = new JCheckBox(plugin);
 		checkBox.setSelected(active);
@@ -61,6 +77,16 @@ public class ManageurPluginVue extends JFrame {
 		});
 		
 		return checkBox;
+	}
+	
+	private JPanel getPanelForPlugin(Plugin plugin, boolean active) {
+		
+		JPanel panel = new JPanel(new BorderLayout());
+		
+		panel.add(getCheckBoxForPlugin(plugin.getNom(), active), BorderLayout.NORTH);
+		panel.add(plugin.getPanelConfig(), BorderLayout.CENTER);
+		
+		return panel;
 	}
 
 }

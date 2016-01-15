@@ -1,7 +1,9 @@
 package fr.miage.m1.pa.explorateur.controleur.listener;
 
+import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
@@ -19,19 +21,28 @@ public class VueExplorerListenerImpl implements VueExplorerListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
-			changeFolder();
+			handleClick();
 		}
 	}
 	
 	@Override
-	public void changeFolder() {
+	public void handleClick() {
 		Vue vue = controleur.getVue();
 		Modele modele = controleur.getModele();
 		
-		File f = new File(vue.getVueExplorer().getFileSelected().getPath());
-		if( modele.setCurrentPath(f) ){
-			vue.getVueNavigator().setPathFile(f.getPath());
+		File f = getCurrentFile();
+		if(f.isDirectory()) {
+			if( modele.setCurrentPath(f) ){
+				vue.getVueNavigator().setPathFile(f.getPath());
+			}
+		} else {
+			try {
+				Desktop.getDesktop().open(f);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		
 		
 	}
 
@@ -46,4 +57,11 @@ public class VueExplorerListenerImpl implements VueExplorerListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {}
+
+	
+	private File getCurrentFile() {
+		Vue vue = controleur.getVue();
+		
+		return new File(vue.getVueExplorer().getFileSelected().getPath());
+	}
 }

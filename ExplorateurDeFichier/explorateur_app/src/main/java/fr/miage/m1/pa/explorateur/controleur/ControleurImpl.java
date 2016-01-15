@@ -1,7 +1,14 @@
 package fr.miage.m1.pa.explorateur.controleur;
 
 import java.io.File;
+import java.util.List;
 
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import fr.miage.m1.pa.explorateur.controleur.classloader.DynamicPluginLoader;
+import fr.miage.m1.pa.explorateur.controleur.classloader.RepositoryG;
 import fr.miage.m1.pa.explorateur.controleur.listener.VueExplorerListenerImpl;
 import fr.miage.m1.pa.explorateur.controleur.listener.VueNavigatorListenerImpl;
 import fr.miage.m1.pa.explorateur.controleur.plugin.ManageurPlugin;
@@ -11,6 +18,7 @@ import fr.miage.m1.pa.explorateur.controleur.save.SaveManager;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.ControleurVueListener;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
+import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 import fr.miage.m1.pa.explorateur.interfaces.Saving;
 import fr.miage.m1.pa.explorateur.interfaces.Vue;
 import fr.miage.m1.pa.explorateur.modele.FileReaderImpl;
@@ -78,11 +86,30 @@ public class ControleurImpl implements Controleur, ControleurVueListener, Manage
 
 		if (name.equals("Plugins")) {
 			new ManageurPluginVue(this, managerPlugin);
+		} else if (name.equals("Charger plugins")) {
+			showFileChooser();
 		}
 		
 		System.out.println(name);
 
 	}
+	
+	private void showFileChooser() {
+		
+		JFileChooser chooser = new JFileChooser(modele.getCurrentPath());
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        "JAR ou ZIP", "jar", "zip");
+		chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(null);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	       File result = chooser.getSelectedFile();
+	       
+	       DynamicPluginLoader<Plugin> dpl = new DynamicPluginLoader<>(Plugin.class);
+	       List<Class<? extends Plugin>> plugins = dpl.load(result);
+	       managerPlugin.addPlugins(plugins);
+	    }
+	}
+	
 
 
 	@Override

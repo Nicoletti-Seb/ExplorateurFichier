@@ -1,10 +1,13 @@
 package fr.miage.m1.pa.explorateur_plugins.decorator;
 
+import java.awt.BorderLayout;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import fr.miage.m1.pa.explorateur.decorator.FileReaderDecorator;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
@@ -81,7 +84,7 @@ public class PluginVueTailleDossierDecorator extends  FileReaderDecorator{
 
 	@Override
 	public JPanel getPanelConfig() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
