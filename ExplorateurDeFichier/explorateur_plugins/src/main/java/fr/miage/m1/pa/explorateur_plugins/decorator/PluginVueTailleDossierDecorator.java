@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import fr.miage.m1.pa.explorateur.decorator.FileReaderDecorator;
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.FileReader;
@@ -75,6 +77,12 @@ public class PluginVueTailleDossierDecorator extends  FileReaderDecorator{
 		}
 		
 		return result;
+	}
+
+	@Override
+	public JPanel getPanelConfig() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

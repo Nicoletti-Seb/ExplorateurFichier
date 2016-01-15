@@ -1,5 +1,7 @@
 package fr.miage.m1.pa.test;
 
+import javax.swing.JPanel;
+
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 
@@ -28,6 +30,12 @@ public class PluginTestChargeurPlugin implements Plugin{
 	
 	public static void main(String[] args) {
 		System.out.println("Build class");
+	}
+
+	@Override
+	public JPanel getPanelConfig() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,5 +1,7 @@
 package fr.miage.m1.pa.explorateur_plugins;
 
+import javax.swing.JPanel;
+
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
 
@@ -19,6 +21,12 @@ public class PluginAnalyseDirSize implements Plugin {
 
 	@Override
 	public String getNom() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JPanel getPanelConfig() {
 		// TODO Auto-generated method stub
 		return null;
 	}

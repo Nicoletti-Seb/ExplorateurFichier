@@ -2,6 +2,8 @@ package fr.miage.m1.pa.explorateur_plugins;
 
 import java.io.File;
 
+import javax.swing.JPanel;
+
 import fr.miage.m1.pa.explorateur.interfaces.Controleur;
 import fr.miage.m1.pa.explorateur.interfaces.Modele;
 import fr.miage.m1.pa.explorateur.interfaces.Plugin;
@@ -114,4 +116,10 @@ public class PluginVueTailleDossier implements Plugin {
         return fileName.substring(fileName.lastIndexOf(".")+1);
         else return "";
     }
+
+	@Override
+	public JPanel getPanelConfig() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

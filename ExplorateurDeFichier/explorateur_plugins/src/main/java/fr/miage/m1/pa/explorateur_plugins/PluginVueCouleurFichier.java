@@ -82,4 +82,10 @@ public class PluginVueCouleurFichier implements Plugin {
 	public static void main(String[] args) {
 		System.out.println("Build class");
 	}
+
+	@Override
+	public JPanel getPanelConfig() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
