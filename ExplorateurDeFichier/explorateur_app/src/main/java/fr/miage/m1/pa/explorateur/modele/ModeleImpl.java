@@ -39,7 +39,8 @@ public class ModeleImpl extends Observable implements Modele {
 		return true;
 	}
 
-	private void update(){
+	@Override
+	public void update(){
 		setChanged();
 		notifyObservers(fileReader);
 	}

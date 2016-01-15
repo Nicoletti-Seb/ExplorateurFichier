@@ -1,13 +1,10 @@
 package fr.miage.m1.pa.explorateur.interfaces;
 
-import java.util.List;
-
 import fr.miage.m1.pa.explorateur.abstracts.VueExplorer;
 import fr.miage.m1.pa.explorateur.abstracts.VueNavigator;
 
 public interface Vue {
-	public void setPluginMenu(List<String> plugins);
-	
+
 	public void setVueNavigator(VueNavigator vue);
 	public VueNavigator getVueNavigator();
 	

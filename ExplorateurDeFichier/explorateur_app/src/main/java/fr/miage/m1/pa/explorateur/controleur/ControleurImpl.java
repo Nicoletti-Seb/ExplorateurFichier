@@ -55,7 +55,6 @@ public class ControleurImpl implements Controleur, ControleurVueListener, Manage
 		modele.addObserver(vue);
 
 		modele.setCurrentPath(currentPath);
-		vue.setPluginMenu(managerPlugin.getPlugins());
 		init();
 	}
 
@@ -115,6 +114,11 @@ public class ControleurImpl implements Controleur, ControleurVueListener, Manage
 	@Override
 	public void setModele(Modele model) {
 		this.modele = model;
+	}
+
+	@Override
+	public void update() {
+		modele.update();
 	}
 
 }

@@ -1,10 +1,14 @@
 package fr.miage.m1.pa.explorateur_plugins.decorator;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-import fr.miage.m1.pa.explorateur.decorator.ModeleDecorator;
+import fr.miage.m1.pa.explorateur.decorator.FileReaderDecorator;
+import fr.miage.m1.pa.explorateur.interfaces.Controleur;
+import fr.miage.m1.pa.explorateur.interfaces.FileReader;
 
-public class PluginVueTailleDossierDecorator extends ModeleDecorator {
+public class PluginVueTailleDossierDecorator extends  FileReaderDecorator{
 
 	@Override
 	public String getNom() {
@@ -12,42 +16,20 @@ public class PluginVueTailleDossierDecorator extends ModeleDecorator {
 	}
 
 	@Override
-	public void onPlug() {
+	public void onPlug(Controleur controleur) {
 		System.out.println("onPlug");
-		//reset();
+		controleur.update();
 	}
 
 	@Override
-	public void onUnplug() {
+	public void onUnplug(Controleur controleur) {
 		System.out.println("onUnplug");
+		controleur.update();
 	}
 
-	/*@Override
-	public void setDatas(String[][] datas) {
-		modeleToDecorate.setDatas(datas);
-		
-		System.out.println("setDATA");
-		List<File> fileList = this.getFileList();
-		List<Title> titles = this.getTitles();
-
-		for (int i = 0; i < fileList.size(); i++) {
-
-			File f = fileList.get(i);
-			for (int j = 0; j < titles.size(); j++) {
-
-				Title title = titles.get(j);
-
-				if (title.equals(Title.SIZE) && f.isDirectory()) {
-					String item = readDirSize(f);
-					datas[i][j] = item;
-				}
-
-			}
-		}
-	}*/
-
-	private String readDirSize(File dir) {
-		return humanReadableByteCount(getDirSize(dir), true);
+	@Override
+	public String getSize() {
+		return humanReadableByteCount(getDirSize(getFile()), true);
 	}
 
 	private long getDirSize(File dir) {
@@ -79,4 +61,20 @@ public class PluginVueTailleDossierDecorator extends ModeleDecorator {
 	public static void main(String[] args) {
 		System.out.println("Build PluginVueTailleDossierDecorator");
 	}
+
+	@Override
+	public List<FileReader> getListFileReader() {
+		
+		List<FileReader> list = super.getListFileReader();
+		List<FileReader> result = new ArrayList<>();
+		
+		for(FileReader f : list){
+			PluginVueTailleDossierDecorator plugin = new PluginVueTailleDossierDecorator();
+			plugin.setFileReaderToDecorate(f);
+			result.add(plugin);
+		}
+		
+		return result;
+	}
+
 }

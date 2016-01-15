@@ -95,5 +95,8 @@ public class ChargeurPluginTest {
 
 		@Override
 		public void setModele(Modele model) {}
+
+		@Override
+		public void update() {}
 	}
 }

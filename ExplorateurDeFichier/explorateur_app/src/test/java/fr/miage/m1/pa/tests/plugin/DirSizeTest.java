@@ -94,6 +94,9 @@ package fr.miage.m1.pa.tests.plugin;
 			public void setModele(Modele model) {
 				// TODO Auto-generated method stub
 			}
+
+			@Override
+			public void update() {}
 		}
 
 

@@ -11,7 +11,7 @@ import fr.miage.m1.pa.explorateur.interfaces.FileReader;
 
 public class FileReaderImpl implements FileReader{
 	
-	private File file;
+	private File file;	
 	
 	public FileReaderImpl(File file) {
 		this.file = file;
@@ -77,6 +77,10 @@ public class FileReaderImpl implements FileReader{
 		this.file = file;
 	}
 	
+	@Override
+	public File getFile() {
+		return file;
+	}
 
 	@Override
 	public List<FileReader> getListFileReader() {

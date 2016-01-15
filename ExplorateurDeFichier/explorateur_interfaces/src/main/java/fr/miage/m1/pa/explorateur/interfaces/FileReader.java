@@ -12,9 +12,8 @@ public interface FileReader {
 	public String getSize();
 	public String getPath();
 	public boolean isDirectory();
-	
 	public void setFile(File file);
+	public File getFile();
 	public List<FileReader> getListFileReader();
-	
 	public TypeFileReader getType();
 }

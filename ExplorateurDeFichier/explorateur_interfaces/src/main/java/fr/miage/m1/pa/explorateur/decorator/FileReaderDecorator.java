@@ -13,9 +13,9 @@ public abstract class FileReaderDecorator implements FileReader, Plugin{
 	protected FileReader fileReaderToDecorate;
 	private FileReader fileReaderDecorateMe;
 	
-	public abstract void onPlug();
-	public abstract void onUnplug();
-
+	public abstract void onPlug(Controleur controleur);
+	public abstract void onUnplug(Controleur controleur);
+	
 	@Override
 	public  String getModified() {
 		return fileReaderToDecorate.getModified();
@@ -32,13 +32,33 @@ public abstract class FileReaderDecorator implements FileReader, Plugin{
 	}
 	
 	@Override
+	public File getFile() {
+		return fileReaderToDecorate.getFile();
+	}
+	
+	@Override
 	public String getPath(){
 		return fileReaderToDecorate.getPath();
 	}
 
 	@Override
-	public List<FileReader> getListFileReader() {
+	public List<FileReader> getListFileReader(){
 		return fileReaderToDecorate.getListFileReader();
+	}
+	
+	@Override
+	public String getFileType() {
+		return fileReaderToDecorate.getFileType();
+	}
+
+	@Override
+	public boolean isDirectory() {
+		return fileReaderToDecorate.isDirectory();
+	}
+	
+	@Override
+	public String getName() {
+		return fileReaderToDecorate.getName();
 	}
 	
 	@Override
@@ -61,6 +81,7 @@ public abstract class FileReaderDecorator implements FileReader, Plugin{
 		}
 		
 		controleur.getModele().setFileReader(this);
+		onPlug(controleur);
 	}
 
 	@Override
@@ -71,10 +92,10 @@ public abstract class FileReaderDecorator implements FileReader, Plugin{
 		}else{
 			controleur.getModele().setFileReader(fileReaderToDecorate);
 		}
-		
+		onUnplug(controleur);
 	}
 	
-	private void setFileReaderToDecorate(FileReader fileReader){
+	public void setFileReaderToDecorate(FileReader fileReader){
 		fileReaderToDecorate = fileReader;
 	}
 	
@@ -82,12 +103,12 @@ public abstract class FileReaderDecorator implements FileReader, Plugin{
 		fileReaderDecorateMe = fileReader;
 	}
 	
-	@Override
-	public abstract String getNom();
 	
 	@Override
 	public final TypeFileReader getType() {
 		return TypeFileReader.DECORATOR;
 	}
-
+	
+	@Override
+	public abstract String getNom();
 }

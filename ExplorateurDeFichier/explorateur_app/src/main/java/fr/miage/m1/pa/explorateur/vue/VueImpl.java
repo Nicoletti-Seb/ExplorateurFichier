@@ -1,20 +1,16 @@
 package fr.miage.m1.pa.explorateur.vue;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
 import fr.miage.m1.pa.explorateur.abstracts.VueExplorer;
 import fr.miage.m1.pa.explorateur.abstracts.VueNavigator;
@@ -70,23 +66,6 @@ public class VueImpl extends JFrame implements Vue, Observer {
 				System.out.println();
 			}
 		});
-	}
-
-	@Override
-	public void setPluginMenu(List<String> plugins) {
-		for (final String plugin : plugins) {
-			JMenuItem menuItem = new JMenuItem(plugin);
-			menuItem.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (controleurlistener != null) {
-						controleurlistener.onMenuClicked(plugin);
-					}
-				}
-
-			});
-			menuPlugin.add(menuItem);
-		}
 	}
 
 	@Override
